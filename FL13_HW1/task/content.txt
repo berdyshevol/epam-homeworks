@@ -1,0 +1,113 @@
+HTML BASICS
+
+Home
+Headings
+Table
+Types of lists
+Text formats
+Blockquotes
+Registration
+
+Fructose, or
+fruit sugar, is a simple
+ketonic monosaccharide found in many plants, where it is often bonded to glucose to form the disaccharide sucrose.
+It is one of the three dietary
+monosaccharides, along with glucose and galactose, that are absorbed directly into blood during digestion.
+Its formula is C6H12O6 and its density is 1.694 g/cm3 .
+Fructose was discovered by French chemist
+Augustin-Pierre Dubrunfaut in
+1847, not in 1846.
+
+It makes us strong!
+This is emphasized.
+
+Excessive consumption of fructose (especially from sugar-sweetened beverages) may contribute to insulin resistance, obesity, elevated
+Low-density lipoprotein LDL cholesterol and triglycerides, leading to metabolic syndrome.
+The European Food Safety Authority EFSA stated that fructose may be preferable over sucrose and glucose in sugar-sweetened foods and beverages because of its lower effect on postprandial blood sugar levels, and noted that
+high intakes of fructose may lead to metabolic complications such as dyslipidaemia, insulin resistance, and increased visceral adiposity (this is a citation).
+
+h1 defines the most important heading. h6 defines the least important heading. Font-size for h1 is the same as font-size for h2, because we have to use only one h1 on the page, and it is commonly used inside header
+
+Heading 2
+Heading 3
+Heading 4
+Heading 5
+Heading 6
+
+Sugar content of selected common plant foods (g/100g)
+Food item
+Free Fructose
+Free Glucose
+Apple
+5.9
+2.4
+Banana
+4.9
+5.0
+Grapes
+8.1
+7.2
+Pineapple
+2.1
+1.7
+
+Unordered Shopping List
+Fruits:
+    Bananas
+    Apples
+    Peaches
+Vegetables:
+    Carrots
+    Cucumbers
+    Beetroot
+Milk
+Butter
+
+Ordered To-do List
+Wash your hands
+Clean your apartment
+Do your homework
+    Create HTML Page
+    Check all requirements & folder structure
+    Upload to GitHub
+
+Definition List
+HTML
+HTML is the standard markup language to create Web pages.
+CSS
+CSS describes how HTML elements are to be displayed.
+JavaScript
+JavaScript is a scripting languages, primarily used on the Web.
+
+Text formats
+Preformatted Text
+Text
+in a pre element
+is displayed in a fixed-width
+font, and it preserves
+both           spaces and
+line breaks
+
+This is code
+.flex {
+  display: flex;
+  justify-content: justify;
+  aliign-items: center;
+}
+
+Blockquotes
+Let’s keep it simple. Italics are good to help set it off from the body text. Be sure to style the citation.
+
+"So if you want to go fast, if you want to get done quickly, if you want your code to be easy to write, make it easy to read."
+
+Robert C. Martin (Uncle Bob)
+
+Name:
+Email:
+Password:
+Select Programming Language
+    JavaScript
+    .Net
+    Java
+Submit
+
