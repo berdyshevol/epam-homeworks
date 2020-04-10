@@ -1,0 +1,361 @@
+/* line 35, ../scss/_main.scss */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* line 41, ../scss/_main.scss */
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+/* line 47, ../scss/_main.scss */
+body {
+  width: 1920px;
+  font-family: "Hind", sans-serif;
+  color: #2c2f3c;
+  background-color: #ffffff;
+}
+
+/* line 55, ../scss/_main.scss */
+.header {
+  height: 900px;
+  width: 100%;
+  background: no-repeat center url("../img/m-h-day.jpg");
+  background-color: white;
+  background-size: cover;
+  border-radius: 0 0 40% 0;
+}
+
+/* line 65, ../scss/_main.scss */
+.header-wrap {
+  margin-left: 193px;
+  padding-top: 26px;
+}
+/* line 68, ../scss/_main.scss */
+.header-wrap .landing-logo {
+  display: flex;
+  align-items: flex-start;
+  text-align: center;
+}
+/* line 72, ../scss/_main.scss */
+.header-wrap .landing-logo img {
+  width: 55px;
+  height: auto;
+}
+/* line 76, ../scss/_main.scss */
+.header-wrap .landing-logo p {
+  margin: 0px 0px 18px 18px;
+  font-size: 1.9em;
+  font-weight: bold;
+  letter-spacing: 0px;
+  line-height: 1.2;
+}
+/* line 83, ../scss/_main.scss */
+.header-wrap .landing-logo span {
+  display: block;
+  margin: 0px 0px 18px -2px;
+  letter-spacing: 0.1px;
+  font-size: 0.4em;
+}
+/* line 91, ../scss/_main.scss */
+.header-wrap .header_heading {
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  margin: 57px 0px 18px -1px;
+  word-spacing: -2px;
+  letter-spacing: 0px;
+  font-size: 5.7em;
+  font-weight: 1000;
+  font-family: "Source Sans Pro", sans-serif;
+  line-height: 1;
+  width: 50%;
+  z-index: 1;
+  position: relative;
+}
+/* line 104, ../scss/_main.scss */
+.header-wrap .header_heading::after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  display: block;
+  width: 380px;
+  height: 62px;
+  background-color: #14a0c7;
+  content: '';
+}
+/* line 108, ../scss/_main.scss */
+.header-wrap .header_text {
+  margin-top: 45px;
+  white-space: pre-line;
+  font-size: 1.2em;
+  line-height: 1.57;
+  word-spacing: 2.1px;
+  letter-spacing: 0.2px;
+  font-family: "Hind", sans-serif;
+}
+/* line 118, ../scss/_main.scss */
+.header-wrap .header_button {
+  margin-top: 56px;
+  padding: 15px 55px 9px;
+  color: #f2f3f7;
+  font-size: 1.4em;
+  font-family: "Hind", sans-serif;
+  font-weight: 600;
+  background-color: #699900;
+  border: none;
+  border-radius: 3px;
+  transition: all 400ms ease-in;
+}
+/* line 130, ../scss/_main.scss */
+.header-wrap .header_button:hover, .header-wrap .header_button:active {
+  background-color: #466600;
+  box-shadow: 0 0 7px 1px rgba(255, 255, 255, 0.9);
+}
+/* line 135, ../scss/_main.scss */
+.header-wrap .header_button:active {
+  box-shadow: none;
+}
+/* line 139, ../scss/_main.scss */
+.header-wrap .header_button + a {
+  color: white;
+  font-size: 2em;
+  padding: 15px 55px 0px 9px;
+  color: white;
+  font-size: 1.5em;
+  font-weight: 500;
+  line-height: 1.57;
+  word-spacing: -1.3px;
+  letter-spacing: 0.4px;
+  padding: 15px 55px 0px 185px;
+}
+
+/* --------------FROM ANDREY
+
+@mixin lines($bottom: 0, $left: 0, $width: 100%, $height: 16px) {
+  position: absolute;
+  bottom: $bottom;
+  left: $left;
+  z-index: -1;
+  display: block;
+  width: $width;
+  height: $height;
+  background-color: getColor(lineColor);
+  content: '';
+}
+
+.header_heading {
+  @include indent;
+  position: relative;
+  margin-top: 91px;
+  width: 50%;
+  font-size: 5.65em;
+  font-weight: 700;
+  font-family: getFont();
+  line-height: 1;
+  z-index: 1;
+
+  &::after {
+    @include lines(0, 0, 380px, 31px);
+  }
+}
+
+.header_text {
+  margin-top: 45px;
+  white-space: pre-line;
+  font-size: 1.2em;
+  line-height: 1.55;
+  word-spacing: 3.5px;
+}
+
+.header_button {
+  margin-top: 58px;
+  padding: 15px 55px;
+  color: #f2f3f7;
+  font-size: 1.4em;
+  font-family: getFont();
+  font-weight: 600;
+  background-color: getColor(btnColor);
+  border: none;
+  border-radius: 3px;
+  transition: all 400ms ease-in;
+
+  &:hover,
+  &:active {
+    background-color: darken(getColor(btnColor), 10%);
+    box-shadow: 0 0 7px 1px rgba(white, 0.9);
+  }
+  &:active {
+    box-shadow: none;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.section {
+  position: relative;
+  width: 100%;
+}
+
+.section_text {
+  @include indent;
+  position: relative;
+  margin-top: 45px;
+  font-size: 3.3em;
+  font-weight: 600;
+  font-family: getFont();
+  text-align: center;
+  z-index: 1;
+
+  &::after {
+    @include lines(10px, 50.5%, 235px);
+  }
+}
+
+.section_card_wrap {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 46px auto 0;
+}
+
+.section_card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 11px 11px;
+  padding: 26px;
+  max-width: 497px;
+  min-width: 470px;
+  width: 30vw;
+  text-align: center;
+  color: white;
+  background-color: getColor(cardColor);
+  border-radius: 10px;
+}
+
+.section_card_img {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.section_card_heading {
+  @include indent;
+  position: relative;
+  flex-grow: 1;
+  margin-top: 18px;
+  font-size: 1.85em;
+  font-weight: 600;
+  font-family: getFont();
+  color: white;
+  z-index: 1;
+
+  .section_card_underline {
+    @include lines();
+    top: 20px;
+  }
+}
+
+.section_card_text {
+  @include indent;
+  flex-grow: 1;
+  align-self: center;
+  margin-top: 20px;
+  font-size: 1.24rem;
+  line-height: 1.5;
+  opacity: 0.7;
+}
+
+.section_banner {
+  position: absolute;
+  bottom: -351px;
+  left: 50%;
+  display: flex;
+  justify-content: space-between;
+  width: 1200px;
+  height: 180px;
+  border-radius: 10px;
+  color: white;
+  background: $gradient;
+  z-index: 11;
+  transform: translateX(-50%);
+}
+
+.section_banner_text_wrap {
+  margin: 32px 0 0 128px;
+}
+
+.section_banner_heading {
+  @include indent;
+  position: relative;
+  font-size: 2.36em;
+  font-weight: bold;
+  font-family: getFont();
+  color: getColor(color);
+  z-index: 1;
+
+  &::before {
+    @include lines(5px, 150px, 80px);
+  }
+}
+
+.section_banner_text {
+  @include indent;
+  margin-top: 20px;
+  font-size: 1.25em;
+  opacity: 0.7;
+}
+
+.section_banner_button {
+  @extend .header_button;
+  align-self: center;
+  margin-top: 0;
+  margin-right: 128px;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 260px;
+  color: white;
+  background-color: getColor(cardColor);
+}
+
+.footer-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 143px 0 50px;
+  width: 80%;
+}
+
+.footer_logo {
+  p {
+    opacity: 0.7;
+  }
+}
+
+.footer_text {
+  width: 385px;
+  font-size: 1.1em;
+  line-height: 1.4;
+  opacity: 0.7;
+}
+
+.footer-cr {
+  font-size: 1.25em;
+  opacity: 0.7;
+}
+*/
+
+/*# sourceMappingURL=style1.css.map */

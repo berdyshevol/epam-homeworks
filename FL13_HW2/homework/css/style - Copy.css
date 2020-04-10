@@ -1,117 +1,116 @@
+/* 1) print */
 @media print {
-    html,
-    body {
-        background-color: white;
-    }
-
     html,
     body,
     .container,
-    .tm-main-content, .tm-content-box, .tm-content-header, .margin-b-10, 
-    .banner, .tm-banner, .tm-banner-inner, .tm-banner-text,
-    .padding-medium, .flex-item, .tm-team-description-container, .flex-item,
-    .tm-section-title, .tm-section-description,
-    .boxes, .gallery-container, .box, .box-bg, .tm-section-title-box, .tm-box-bg-title,
-    .heading, .blocks, .tm-team-description-container, .flex-2-col, .box-work,
-    .carousel, .slide, .carousel-indicators, .carousel-inner, .carousel-item, .carousel-content,
-    .carousel-description, h2, p {
-        margin: 0;
-        padding: 0;
-        width: 620px;
+    .tm-main-content,
+    .tm-content-header {
+      text-align: center;
+      background-color: white;
+      margin: 0;
+      padding: 0;
     }
-
     .tm-sidebar,
     .tm-team-img,
     .boxes,.tm-main-content
     .carousel-indicators,
     section:last-of-type {
-        display: none;
+      display: none;
     }
-
     .tm-main-content {
-        margin-top: 10px;
-        margin-left: 100px;
-        margin-right: 100px;
+        margin: 10px 50px 50px 0;
+        padding: 0 auto;
+    }
+    .tm-banner {
         padding: 0;
     }
-
-    .tm-banner-inner {
-        padding-top: 20px;
+    .tm-content-box {
+        margin-bottom: 0px;
     }
+    
+ 
+    /* .tm-main-content,
+    .tm-banner,
+    .padding-medium,
+    .slide {
+      padding: 0;
+    } */
+ 
+    /* h2 {
+      margin-bottom: 10px;
+      font-weight: 300;
+      text-transform: uppercase;
+      color: lightskyblue;
+      -webkit-print-color-adjust: exact;
+    } */
 
-    .tm-banner-text {
-        padding: 0 20px 20px 0;
-        letter-spacing: 5px;
-        word-spacing: 10px;
-    }
-
-    h2 {
-        text-align: center;
-        margin-top: 30px;
-        font-weight: 300;
-        text-transform: uppercase;
-        color: lightskyblue;
-        -webkit-print-color-adjust: exact;
-    }
-
-    .tm-section-title {
-        padding-top: 30px;
-    }
-
-    p {
+    /* .tm-section-description {
         font-style: italic;
-        line-height: 1.6;
-        margin: 15px 0 0 15px;
-        text-align: center;
-    }
+    } */
 
-    .tm-section-description {
-        margin: 15px 0 0 15px;
-    }
+    /* p {
+      padding: 0 15px;
+    } */
  
-    .heading ol {
-        margin: 0 auto;
-        padding: 0;
-        max-width: 280px;
-        list-style: none;
-        line-height: 1.4;
-    }
+    /* .tm-banner,
+    .blocks {
+      margin-bottom: 0;
+    } */
  
-    .heading li {
-        margin-top: 10px;
+    /* .tm-banner-text {
+      letter-spacing: 5px;
+      word-spacing: 10px;
+    } */
+ 
+    /* .heading,
+    .slide {
+      margin: 15px 0 5px;
+    } */
+ 
+    /* .heading ol {
+      margin: 0 auto;
+      padding: 0;
+      max-width: 280px;
+      list-style: none;
+      line-height: 1.4;
+    } */
+ 
+    /* .heading li {
+      margin-bottom: 10px;
     }
-  
-    .heading li:nth-child(odd) {
-        text-align: left;
+  */
+    /* .heading li:nth-child(odd) {
+      text-align: left;
     }
  
     .heading li:nth-child(even) {
-        text-align: right;
+      text-align: right;
     }
  
     .heading a {
-        -webkit-print-color-adjust: exact;
-    }
+      -webkit-print-color-adjust: exact;
+    } */
 }
 
 @media screen {
+/* 2)*/
     .tm-nav-item-link:hover {
         background-color: lightskyblue;
         color: #fff;
     }
-
     .tm-content-header {
         margin-top: 0;
     }
 
+    /* 3*/
     .tm-banner {
         background-image: linear-gradient(to top, lightskyblue, burlywood);
     }
-
     .tm-banner-inner {
         background-color: white;
     }
 
+    /* 4) Add shadow for banner text and spacing between words and letters. ( see Figure 3 */
     .tm-banner-text {
         text-shadow:
             0 10px 2px #76cdd7,
@@ -121,11 +120,19 @@
         padding-left: 0px;
     }
 
+    /* 5) Add a box-shadow to navigation 
+    and to each content block (color - rgba(61, 55, 61, 0.7)). 
+    Change banner’s background-color to #76cdd7.  ---------For What
+    Add text-shadow, letter-spacing and word-spacing to the banner (see Figure 4 for reference). --- we have done this in 4)
+    */
     section,
     #home,
     .tm-main-nav  {
         box-shadow: 0 0 10px 0 rgba(61, 55, 61, 0.7);
     }
+
+    /* 6) Add animation to the banners text. Make it move from 45 degree to 0.
+    (see examples/animation.gif). */
 
     @keyframes rotate {
         0% {
@@ -141,35 +148,39 @@
         animation-duration: 3s;
     }
 
+    /* 7) Add styles to make picture from the left side and text in center of section. 
+    Text should be styled as on the picture.(see Figure 4) */
+
     .flex-2-col {
         display: flex;
         flex-direction: row-reverse;
     }
-
     .tm-team-description-container {
         align-self: center;
     }
-
     h2 {
         text-align: center;
         color: lightskyblue;
     }
-
     .tm-section-description {
         font-style: italic;
         text-indent: 20px;
     }
 
+    /* 8) There is a gallery section in the markup. Please add a hover effect to it as shown in Figure 5. */
+    /* .gallery-container {
+        margin-top: 5xp;
+    } */
     .tm-section-title-box:hover {
         background-color: lightskyblue;
         color: white;
         line-height: 1.7;
     }
 
+    /* 9) Make use of pseudo-elements  to add a blue triangle to each section of the page (see top left corner in Figure 6). */
     section {
         position: relative;
     }
-
     section::before {
         position: absolute;
         top: 0;
@@ -180,10 +191,19 @@
         border-bottom-color: transparent;
     }
 
+    /* 10) Add styling to the “We are…” section (see Figure 7 for reference):
+        • add styling to section header;
+        • change list type to decimal-leading-zero;
+        • the hovered links should look like “Architects” item (red);
+        • add “New” label to the end of “Designers” and “Strategists” list items; change their font-variant and boldness. */
+    /* .heading.tm-content-box h2 {
+        text-align: center;
+        color: lightskyblue;
+        
+    } */
     .heading.tm-content-box ol {    
         list-style-type: decimal-leading-zero;
     }
-
     .heading .text:after {
         content: "New";
         color: red;
@@ -192,46 +212,45 @@
         font-variant: small-caps;
         font-size: 10px;
     }
-
     #list a:hover {
         color: red;
         font-weight: bold;
     }
-
     #list li:hover::before {
         content: ">";
         color: red;
         font-weight: bold;
     }
+    
+    /* 11) Every first paragraph that immediately follows <h2> should be italicized and formatted in such a way (see Figure 8 for reference): 
+    - vertical space between lines should be increased;
+    - some extra space at the start of the first line should be added. */
+    
+
+    /* 12) Style the following block as shown in Figure 9. */
    
     .box-work {
         padding: 10px;
         margin-top: 3px;
     }
-
     .blocks .gallery-container h2 {
         text-align: left;
     }
-
     .box-work:nth-last-of-type(odd) {
         background-color: lightskyblue;
     }
-
     .box-work:nth-last-of-type(odd) h2 {
         color: white;
     }
-
     .box-work p {
         text-indent: 0;
         margin-top: 10px;
         line-height: 1.5;
         font-style: italic;
     }
-
     .box-work p {
         margin-top: 0px;
     }
-
     .box-work:nth-child(n+4)  {
         margin-top: 0px;
     }
@@ -239,31 +258,29 @@
     .box-work p::first-letter {
         font-weight: bold;
     }
-
     .box-work:nth-last-of-type(odd) p {
         color: white;
     }
 
+    /* 13) Style form elements as shown in Figure 10. 
+    Note that subject field contains an image (img/search-icon.png).
+    All fields have focus (Figure 11). */
     .carousel-inner p{
         padding-left: 1px;
         text-align: center;
     }
-
     #contact h2 {
         text-align: right;
     }
-
     .contact-form input[type="text"],
     .contact-form input[type="email"] {
         border: none;
         border-bottom: 2px solid lightskyblue;
     }
-
     .contact-form input[type="email"] {
         background: url(../img/email-icon.png) no-repeat right;
         background-size: 30px;
     }
-
     button[type="submit"] {
         width: 135px;
         height: 50px;
@@ -277,7 +294,6 @@
         background-color: #76cdd7;
         caret-color: white;
     }
-
     .contact-form button:hover {
         background-color: #76cdd7;
         color: white;
