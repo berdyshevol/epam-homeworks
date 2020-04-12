@@ -6,7 +6,7 @@
     @return null;
 }
 
-@function getFont($key) {
+@function getFont($key: smth) {
     @if map-has-key($fonts, $key) {
         @return map-get($fonts, $key);
     }
@@ -46,7 +46,6 @@ body {
 
 body {
     width: 1920px;
-    // min-width: 100%;
     font-family: getFont(fontHeader);
     color: getColor(color);
     background-color: getColor(bgColor);
@@ -95,7 +94,7 @@ body {
         word-spacing: -2px;
         letter-spacing: 0px;
         font-size: 5.7em;
-        font-weight: 1000;
+        font-weight: 900;
         font-family: getFont(smth);
         line-height: 1;
         width: 50%;
@@ -124,8 +123,6 @@ body {
         font-weight: 600;
         background-color: getColor(btnColor);
         border: none;
-        // border-radius: 3px;
-        // transition: all 400ms ease-in;
       
         &:hover,
         &:active {
@@ -187,7 +184,7 @@ main {
             height: auto;
           }
           img[src="img/m-1.jpg"] {
-            width: 64%;//370px;
+            width: 64%;
           }
           img[src="img/m-2.jpg"] {
             width: 60%;
@@ -198,10 +195,8 @@ main {
           .section_card_right_container {
             display: block;
             width: 100%;
-            // background-color: red;
             margin: 0 125px 0 0;
             .section_card_heading {
-              // background-color: green;
               text-align: center;
               color: #ffffff;
               width: 100%;
@@ -217,7 +212,6 @@ main {
 
             .section_card_text {
               box-sizing: border-box;
-              // background-color: blue;
               text-align: justify;
               color: #ffffff;
               font-family: getFont(fontHeader);
@@ -233,7 +227,6 @@ main {
             .section_link {
               width: 100%;
               display: block;
-              // background-color: yellow;
               text-align: center;
               color: #ffffff;
               font-family: getFont(fontHeader);
@@ -251,8 +244,8 @@ main {
     }
 }
 
-// ------------------------
 .section_banner {
+  position: absolute;
   margin-top: 175px;
   margin-left: 360px;
   display: flex;
@@ -264,13 +257,11 @@ main {
   border-radius: 10px;
   color: white;
   background: $gradient;
-  // z-index: 11;
-  // transform: translateX(-50%);
+  z-index: 11;
   .section_banner_text_wrap {
     margin: 0;
     margin-left: 128px;
     .section_banner_heading {
-      // @include indent;
       margin-top: 30px;
   
       font-size: 2.36em;
@@ -285,16 +276,13 @@ main {
     }
   
     .section_banner_text {
-      // @include indent;
       margin-top: -17px;
       font-size: 1.25em;
-      // opacity: 0.7;
     }
   }
   .section_banner_button {
     @extend .header_button;
     align-self: center;
-    
     margin-right: 128px;
   }
 }
@@ -309,7 +297,6 @@ main {
   font-weight: 600;
   background-color: getColor(btnColor);
   border: none;
-  // transition: all 400ms ease-in;
 
   &:hover,
   &:active {
@@ -329,7 +316,8 @@ main {
   display: flex;
   justify-content: center;
   width: 100%;
-  margin-top: -92px;
+  margin-top: 262px;
+  padding-bottom: 20px;
   color: white;
   background-color: getColor(cardColor);
 }
@@ -338,246 +326,54 @@ main {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 143px 0 50px;
+  margin: 160px 0 50px;
   width: 80%;
+  color: #c0c3ce;
 }
 
 .footer_logo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  img {
+    margin-top: 9px;
+    width: 55px;
+  }
   p {
-    opacity: 0.7;
+    text-align: center;
+    margin: -8px 0px 0px 19px;
+    padding: 0 0px 0 0;
+    font-size: 2em;
+    font-weight: 800;
+    letter-spacing: -1.3px;
+    word-spacing: 2px;
+    line-height: 1.5;
+    span {
+      font-family: getFont(fontHeader);
+      display: block;
+      margin: 0px 0px 0px 0px;
+      padding: 0 0 0 0;
+      font-size: 0.4em;
+      font-weight: 800;
+      letter-spacing: -0.2px;
+      word-spacing: 1px;
+      line-height: 0;
+    }
   }
 }
 
 .footer_text {
-  width: 385px;
+  margin: 0px 0 0 -16px;
+  padding: 0 0 0 0px;
+  width: 370px;
   font-size: 1.1em;
-  line-height: 1.4;
-  opacity: 0.7;
+  font-weight: 800;
+  letter-spacing: 0.1px;
+  word-spacing: -2.8px;
+  line-height: 1.45;
 }
 
 .footer-cr {
   font-size: 1.25em;
   opacity: 0.7;
 }
-
-
-/* --------------FROM ANDREY
-
-@mixin lines($bottom: 0, $left: 0, $width: 100%, $height: 16px) {
-  position: absolute;
-  bottom: $bottom;
-  left: $left;
-  z-index: -1;
-  display: block;
-  width: $width;
-  height: $height;
-  background-color: getColor(lineColor);
-  content: '';
-}
-
-.header_heading {
-  @include indent;
-  position: relative;
-  margin-top: 91px;
-  width: 50%;
-  font-size: 5.65em;
-  font-weight: 700;
-  font-family: getFont();
-  line-height: 1;
-  z-index: 1;
-
-  &::after {
-    @include lines(0, 0, 380px, 31px);
-  }
-}
-
-.header_text {
-  margin-top: 45px;
-  white-space: pre-line;
-  font-size: 1.2em;
-  line-height: 1.55;
-  word-spacing: 3.5px;
-}
-
-.header_button {
-  margin-top: 58px;
-  padding: 15px 55px;
-  color: #f2f3f7;
-  font-size: 1.4em;
-  font-family: getFont();
-  font-weight: 600;
-  background-color: getColor(btnColor);
-  border: none;
-  border-radius: 3px;
-  transition: all 400ms ease-in;
-
-  &:hover,
-  &:active {
-    background-color: darken(getColor(btnColor), 10%);
-    box-shadow: 0 0 7px 1px rgba(white, 0.9);
-  }
-  &:active {
-    box-shadow: none;
-  }
-
-  &:focus {
-    outline: none;
-  }
-}
-
-.section {
-  position: relative;
-  width: 100%;
-}
-
-.section_text {
-  @include indent;
-  position: relative;
-  margin-top: 45px;
-  font-size: 3.3em;
-  font-weight: 600;
-  font-family: getFont();
-  text-align: center;
-  z-index: 1;
-  &::after {
-    @include lines(10px, 50.5%, 235px);
-  }
-}
-
-.section_card_wrap {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin: 46px auto 0;
-}
-
-.section_card {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0 11px 11px;
-  padding: 26px;
-  max-width: 497px;
-  min-width: 470px;
-  width: 30vw;
-  text-align: center;
-  color: white;
-  background-color: getColor(cardColor);
-  border-radius: 10px;
-}
-
-.section_card_img {
-  width: 100%;
-  border-radius: 5px;
-}
-
-.section_card_heading {
-  @include indent;
-  position: relative;
-  flex-grow: 1;
-  margin-top: 18px;
-  font-size: 1.85em;
-  font-weight: 600;
-  font-family: getFont();
-  color: white;
-  z-index: 1;
-
-  .section_card_underline {
-    @include lines();
-    top: 20px;
-  }
-}
-
-.section_card_text {
-  @include indent;
-  flex-grow: 1;
-  align-self: center;
-  margin-top: 20px;
-  font-size: 1.24rem;
-  line-height: 1.5;
-  opacity: 0.7;
-}
-
-.section_banner {
-  position: absolute;
-  bottom: -351px;
-  left: 50%;
-  display: flex;
-  justify-content: space-between;
-  width: 1200px;
-  height: 180px;
-  border-radius: 10px;
-  color: white;
-  background: $gradient;
-  z-index: 11;
-  transform: translateX(-50%);
-}
-
-.section_banner_text_wrap {
-  margin: 32px 0 0 128px;
-}
-
-.section_banner_heading {
-  @include indent;
-  position: relative;
-  font-size: 2.36em;
-  font-weight: bold;
-  font-family: getFont();
-  color: getColor(color);
-  z-index: 1;
-
-  &::before {
-    @include lines(5px, 150px, 80px);
-  }
-}
-
-.section_banner_text {
-  @include indent;
-  margin-top: 20px;
-  font-size: 1.25em;
-  opacity: 0.7;
-}
-
-.section_banner_button {
-  @extend .header_button;
-  align-self: center;
-  margin-top: 0;
-  margin-right: 128px;
-}
-
-.footer {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  margin-top: 260px;
-  color: white;
-  background-color: getColor(cardColor);
-}
-
-.footer-wrap {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 143px 0 50px;
-  width: 80%;
-}
-
-.footer_logo {
-  p {
-    opacity: 0.7;
-  }
-}
-
-.footer_text {
-  width: 385px;
-  font-size: 1.1em;
-  line-height: 1.4;
-  opacity: 0.7;
-}
-
-.footer-cr {
-  font-size: 1.25em;
-  opacity: 0.7;
-}
-*/

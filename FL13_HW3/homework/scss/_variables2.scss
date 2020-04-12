@@ -1,0 +1,16 @@
+$SourceSansPro : ('Source Sans Pro', sans-serif);
+$Fresca : ('Fresca', sans-serif);
+$Hind : ('Hind', sans-serif);
+$fonts: (
+    smth: $SourceSansPro, 
+    fontHeader: $Fresca
+);
+$colors: (
+  bgColor: #21232e,
+  color: #ffffff,
+  lineColor: #ff4e33,
+  btnColor: #e3ac00,
+  cardColor: #3b3f50
+);
+$bgHeaderImg: "../img/m-h-night.jpg";
+$gradient: linear-gradient(40deg, #e2aa01 0%, #912b53 100%);
