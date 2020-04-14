@@ -2,7 +2,11 @@ $SourceSansPro : ('Source Sans Pro', sans-serif);
 $Fresca : ('Fresca', sans-serif);
 $Hind : ('Hind', sans-serif);
 $fonts: (
-    smth: $SourceSansPro, 
+    fontLogo: $Fresca,
+    fontLink: $SourceSansPro,
+    fontCardLink: $Hind,
+    body: $SourceSansPro, 
+    fontFooter: Fresca,
     fontHeader: $Fresca
 );
 $colors: (
