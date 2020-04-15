@@ -1,0 +1,27 @@
+* {
+  box-sizing: border-box;
+  margin: 0 0 0 0px;
+  padding: 0;
+}
+
+html,
+body {
+  min-width: 900px;
+  color: #777;
+  font-family: 'Open Sans', sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: #777;
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  height: auto;
+  width: 100%;
+}
+

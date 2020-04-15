@@ -1,0 +1,95 @@
+.header {
+  height: 100vh;
+  width: 1600px;
+  margin-bottom: 280px;
+  // border: 5px solid red;
+  
+  &__nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0;
+    height: 90px;
+    background-color: #FFFFFF;
+  }
+  
+  &__link {
+    color: #777;
+    text-transform: uppercase;
+    margin-left: 230px;
+    font-size: 1.3em;
+    word-spacing: 0px;
+    letter-spacing: 3px;
+    font-weight: 600;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 360px;
+    margin-right: 235px;
+    margin-top: 5px;
+    font-size: 1em;
+    word-spacing: 0px;
+    letter-spacing: 3px;
+    font-weight: 500;
+  }
+
+  &__item a:hover {
+    color: #bfba55;
+  }
+
+  &__hero {
+    width: 100%;
+    background-color: #000;
+    height: calc(100vh + 80px);
+    overflow: hidden;
+    .image {
+      width: 100%;
+      background-image: url("../img/home-bg.jpg");
+      background-repeat: no-repeat;
+      height: 100vh;
+      opacity: 30%;
+      border: 5px solid green;
+    }
+    
+  }
+
+  &__hero-info {
+    margin-top: -400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    h1 {
+      font-size: 4.6em;
+      word-spacing: 0px;
+      letter-spacing: 3px;
+      font-weight: 500;
+    }
+    p {
+      color: #bfba55;
+      margin-top: 15px;
+      font-size: 1em;
+      word-spacing: 0px;
+      letter-spacing: 3px;
+      font-weight: 500;
+    }
+    button {
+      height: 45px;
+      width: 160px;
+      border-radius: 22px 22px 22px 22px;
+      text-transform: uppercase;
+      
+      color: #777;
+      margin-top: 50px;
+      font-size: 0.7em;
+      word-spacing: 0px;
+      letter-spacing: 2px;
+      font-weight: 800;
+    }
+  }
+}
+

@@ -1,0 +1,239 @@
+* {
+  box-sizing: border-box;
+  margin: 0 0 0 0px;
+  padding: 0;
+}
+
+html,
+body {
+  min-width: 900px;
+  color: #777;
+  font-family: 'Open Sans', sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: #777;
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  height: auto;
+  width: 100%;
+}
+
+.header {
+  height: 100vh;
+  width: 1600px;
+  margin-bottom: 280px;
+}
+.header__nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+  height: 90px;
+  background-color: #FFFFFF;
+}
+.header__link {
+  color: #777;
+  text-transform: uppercase;
+  margin-left: 230px;
+  font-size: 1.3em;
+  word-spacing: 0px;
+  letter-spacing: 3px;
+  font-weight: 600;
+}
+.header__list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 360px;
+  margin-right: 235px;
+  margin-top: 5px;
+  font-size: 1em;
+  word-spacing: 0px;
+  letter-spacing: 3px;
+  font-weight: 500;
+}
+.header__item a:hover {
+  color: #bfba55;
+}
+.header__hero {
+  width: 100%;
+  background-color: #000;
+  height: calc(100vh + 80px);
+  overflow: hidden;
+}
+.header__hero .image {
+  width: 100%;
+  background-image: url("../img/home-bg.jpg");
+  background-repeat: no-repeat;
+  height: 100vh;
+  opacity: 30%;
+  border: 5px solid green;
+}
+.header__hero-info {
+  margin-top: -400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.header__hero-info h1 {
+  font-size: 4.6em;
+  word-spacing: 0px;
+  letter-spacing: 3px;
+  font-weight: 500;
+}
+.header__hero-info p {
+  color: #bfba55;
+  margin-top: 15px;
+  font-size: 1em;
+  word-spacing: 0px;
+  letter-spacing: 3px;
+  font-weight: 500;
+}
+.header__hero-info button {
+  height: 45px;
+  width: 160px;
+  border-radius: 22px 22px 22px 22px;
+  text-transform: uppercase;
+  color: #777;
+  margin-top: 50px;
+  font-size: 0.7em;
+  word-spacing: 0px;
+  letter-spacing: 2px;
+  font-weight: 800;
+}
+
+.post {
+  margin-top: 90px;
+  padding-left: 330px;
+  padding-right: 330px;
+}
+.post img {
+  width: 945px;
+}
+.post__title {
+  margin-top: 30px;
+  font-size: 2em;
+  word-spacing: 0.2px;
+  letter-spacing: -3px;
+  font-weight: 700;
+}
+.post__text {
+  margin-top: 25px;
+  padding-left: 5px;
+  padding-right: 0px;
+  width: 945px;
+  font-size: 1.1em;
+  word-spacing: -0.7px;
+  letter-spacing: 0px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+.post__btn {
+  font-family: 'Open Sans', sans-serif;
+  height: 50px;
+  width: 190px;
+  margin-top: 40px;
+  border-radius: 25px;
+  font-size: 0.9em;
+  word-spacing: -0.7px;
+  letter-spacing: 0px;
+  font-weight: 700;
+  border: 1px solid #000;
+  background-color: #fff;
+}
+.post__hr {
+  margin-top: 60px;
+  width: 945px;
+}
+
+main.article {
+  border: 1px solid red;
+}
+
+.ditails {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 360px;
+  margin-top: 10px;
+  font-size: 0.9em;
+}
+.ditails img {
+  width: 40px;
+  height: 40px;
+  border-radius: 25px;
+}
+.ditails__item {
+  margin-right: 25px;
+}
+.ditails__comments {
+  position: relative;
+  z-index: 1;
+}
+.ditails__comments:before {
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  z-index: 2;
+  left: -20px;
+  bottom: 0px;
+  display: block;
+  content: "";
+  background-image: url("../img/comment-white-oval-bubble.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.hide {
+  display: none;
+}
+
+.footer {
+  margin-top: 100px;
+  padding-top: 90px;
+  height: 360px;
+  width: 1600px;
+  background-color: #000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.footer__left-column {
+  margin-left: 330px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 450px;
+}
+.footer__left-column h2 {
+  font-weight: 700;
+  color: #fff;
+}
+.footer__left-column p {
+  margin-top: 20px;
+}
+.footer__right-column {
+  margin-right: 330px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.footer__right-column h2 {
+  font-weight: 700;
+  color: #fff;
+}
+.footer__right-column p {
+  margin-top: 20px;
+}
+
+/*# sourceMappingURL=style.css.map */
