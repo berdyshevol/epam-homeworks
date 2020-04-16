@@ -6,9 +6,10 @@
 
 html,
 body {
-  min-width: 900px;
+  width: 100%;
   color: #777;
-  font-family: 'Open Sans', sans-serif;
+  // font-family: 'Open Sans', sans-serif;
+  font-family: serif;
 }
 
 a {
@@ -25,3 +26,16 @@ img {
   width: 100%;
 }
 
+button {
+  outline: none;
+}
+
+button:hover {
+  color: #bfba55;
+}
+
+.container {
+  // width: 1440px;; // !!!!!!!!!!!!!!!!!!!!!!!!!!
+  min-width: 900px;
+  width: 100%;
+}

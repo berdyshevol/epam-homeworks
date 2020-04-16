@@ -1,36 +1,38 @@
-.post {
-  margin-top: 90px;
-  padding-left: 330px;
-  padding-right: 330px;
-  img {
-    width: 945px;
-  }
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 30px;
+  padding: 0px 37vh 0;
+}
 
+.post {
+  margin-top: 70px;
   &__title {
+    color: #000;
     margin-top: 30px;
-    font-size: 2em;
-    word-spacing: 0.2px;
-    letter-spacing: -3px;
+    font-size: 1.7em;
+    word-spacing: 0px;
+    letter-spacing: 0px;
     font-weight: 700;
   }
 
   &__text {
-    margin-top: 25px;
-    padding-left: 5px;
+    margin-top: 20px;
+    padding-left: 0px;
     padding-right: 0px;
-    width: 945px;
     font-size: 1.1em;
-    word-spacing: -0.7px;
+    word-spacing: 0px;
     letter-spacing: 0px;
     font-weight: 500;
     line-height: 1.4;
   }
 
   &__btn {
-    font-family: 'Open Sans', sans-serif;
     height: 50px;
-    width: 190px;
-    margin-top: 40px;
+    width: 170px;
+    margin-top: 30px;
     border-radius: 25px;
     font-size: 0.9em;
     word-spacing: -0.7px;
@@ -42,35 +44,31 @@
 
   &__hr {
     margin-top: 60px;
-    width: 945px;
   }
-}
-
-main.article {
-  border: 1px solid red;
 }
 
 .ditails {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
-  width: 360px;
+  justify-content: flex-start;
   margin-top: 10px;
   font-size: 0.9em;
   img {
     width: 40px;
     height: 40px;
-    border-radius: 25px;
+    border-radius: 20px;
+    margin-right: 5px;
   }
 
   &__item {
-    margin-right: 25px;
+    margin-right: 20px;
   }
 
   &__comments {
     position: relative;
     z-index: 1;
+    margin-left: 10px;
   }
 
   &__comments:before {
