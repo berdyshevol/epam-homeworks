@@ -2,30 +2,125 @@
  * Feel free to change name of colors if you need it
  * Feel free to add new colors if you need it
  */
+@media screen {
+  :root {
+    --bg-color--dark: #0b192f;
+    --bg-color--medium: #162b4d;
+    --text--color: #484848;
+    --link: #fff;
+    --link--hover: #b8b8b8;
+  }
 
-:root {
-  --bg-color--dark: #0b192f;
-  --bg-color--medium: #162b4d;
-  --text--color: #484848;
-  --link: #fff;
-  --link--hover: #b8b8b8;
+  body {
+    font-family: roboto;
+  }
+
+  .post-1 {
+    background: #F3D250;
+  }
+  .post-2 {
+    background: #8D8741;
+  }
+  .post-3 {
+    background: #659DBD;
+  }
+  .post-4 {
+    background: #DAAD86;
+  }
+
+  /* Global */
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+
+  /* html,
+  body {
+    
+  } */
+
+  /* applied to all screens */
+  .grid-container {
+    display: grid;
+    /* grid-gap: 0px; */
+    grid-template-columns: repeat(12, 1fr);
+    /* grid-template-rows: 40px auto 40px; */
+    grid-template-areas: 
+        "h h h h h h h h h h h h"
+        "m m m m m m m m m a a a"
+        "f f f f f f f f f f f f";
+  }
+
+  .header {
+    grid-area: h;
+    background-color: green;
+  }
+
+  .main {
+    grid-area: m;
+  }
+
+  .aside {
+    grid-area: a;
+    background-color: yellow;
+  }
+
+  .footer {
+    grid-area: f;
+    background-color: red;
+  }
+
+  .section {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .section >.caption {
+    background-color: lightblue;
+  }
 }
 
-body {
-  font-family: roboto;
+  /* desktop */
+@media screen and (min-width: 768px) {
+  .section:nth-child(odd) {
+    flex-direction: row;
+  }
+  
+  .section:nth-child(even) {
+    flex-direction: row-reverse;
+  }
+  
+  .picture {
+    width: 50%;
+  }
+  .picture > img {
+    height: 100%;
+  }
+  
+  .section >.caption {
+    width: 50%;
+    background-color: rgb(92, 173, 201);
+  }
 }
 
-.post-1 {
-	background: #F3D250;
-}
-.post-2 {
-	background: #8D8741;
-}
-.post-3 {
-	background: #659DBD;
-}
-.post-4 {
-	background: #DAAD86;
+/* tablets */
+@media screen and (max-width: 768px) {
+
 }
 
-/* Your styles go here */
+/* mobile */
+@media screen and (max-width: 480px) {
+  .grid-container {
+    display: grid;
+    grid-gap: 0px;
+    grid-template-columns: repeat(12, 1fr);
+    /* grid-template-rows: 40px auto 40px; */
+    grid-template-areas: 
+        "h h h h h h h h h h h h"
+        "m m m m m m m m m m m m"
+        "a a a a a a a a a a a a"
+        "f f f f f f f f f f f f";
+  }
+}
