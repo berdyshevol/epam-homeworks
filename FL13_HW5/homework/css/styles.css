@@ -13,7 +13,6 @@
 
   body {
     font-family: roboto;
-    color: #484848
   }
 
   .post-1 {
@@ -37,20 +36,21 @@
     width: 100%;
   }
 
-  /* html,
+  html,
   body {
-    
-  } */
+    background-color: #0b192f;
+    color: #484848
+  }
 
   /* applied to all screens */
   .grid-container {
     display: grid;
-    /* grid-gap: 0px; */
     grid-template-columns: repeat(12, 1fr);
     /* grid-template-rows: 40px auto 40px; */
     grid-template-areas: 
         "h h h h h h h h h h h h"
         "m m m m m m m m m a a a"
+        "m m m m m m m m m b b b"
         "f f f f f f f f f f f f";
   }
 
@@ -63,8 +63,13 @@
     grid-area: m;
   }
 
-  .aside {
+  .aside1 {
     grid-area: a;
+    background-color: yellow;
+  }
+
+  .aside2 {
+    grid-area: b;
     background-color: yellow;
   }
 
@@ -160,10 +165,12 @@
 
   /* desktop */
 @media screen and (min-width: 768px) {
-  /* .grid-container {
+  .grid-container {
     grid-gap: 18px;
-    justify-content: space-around;
-  } */
+    padding-left: 36px;
+    padding-right: 36px;
+    /* justify-content: space-around; */
+  }
 
   .section {
     justify-content: space-between;
@@ -206,21 +213,29 @@
 
 /* tablets */
 @media screen and (max-width: 768px) {
-
+  .grid-container {
+    grid-gap: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
 }
 
 /* mobile */
 @media screen and (max-width: 480px) {
   .grid-container {
-    display: grid;
-    /* grid-gap: 18px;
-    justify-content: space-around; */
+    grid-gap: 12px;
     grid-template-columns: repeat(12, 1fr);
-    /* grid-template-rows: 40px auto 40px; */
     grid-template-areas: 
         "h h h h h h h h h h h h"
         "m m m m m m m m m m m m"
         "a a a a a a a a a a a a"
+        "b b b b b b b b b b b b"
         "f f f f f f f f f f f f";
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  .footer {
+    margin-top: 10px;
   }
 }
