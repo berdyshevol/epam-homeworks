@@ -1,7 +1,3 @@
-/*
- * Feel free to change name of colors if you need it
- * Feel free to add new colors if you need it
- */
 @media screen {
   :root {
     --bg-color--dark: #0b192f;
@@ -42,16 +38,21 @@
     color: #484848
   }
 
+  a {
+    text-decoration: none;
+  }
+
   /* applied to all screens */
   .grid-container {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     /* grid-template-rows: 40px auto 40px; */
     grid-template-areas: 
-        "h h h h h h h h h h h h"
-        "m m m m m m m m m a a a"
-        "m m m m m m m m m b b b"
-        "f f f f f f f f f f f f";
+      "h h h h h h h h h h h h"
+      "m m m m m m m m m a a a"
+      "m m m m m m m m m b b b"
+      "m m m m m m m m m . . ."
+      "f f f f f f f f f f f f";
   }
 
   .header {
@@ -63,14 +64,12 @@
     grid-area: m;
   }
 
-  .aside1 {
+  .news-1 {
     grid-area: a;
-    background-color: yellow;
   }
 
-  .aside2 {
+  .news-2 {
     grid-area: b;
-    background-color: yellow;
   }
 
   .footer {
@@ -78,136 +77,166 @@
     background-color: red;
   }
 
-  .section {
+  .post__caption {
     display: flex;
     flex-direction: column;
   }
 
-  /* .section >.caption {
-    background-color: lightblue;
-  } */
-
-  .caption {
-    display: flex;
-    flex-direction: column;
+  .post__info {
+    padding-left: 7%;
+    padding-right: 7%;
   }
 
-  .date {
+  .post__title {
+    padding-top: 20px;
+  }
+
+  .post__text {
+    padding-top: 1vw;
+    line-height: 1.5;
+  }
+
+  .post__date {
     text-align: center;
-    border: 1px solid black;
-    font-size: 3vw;
     line-height: 0.6;
-  }
-
-  .date > span {
-    font-size: 1.5vw;
-  }
-
-  .title {
-    font-size: 3vw;
-  }
-
-  .text {
-    font-size: 1vw;
-    border: 1px solid black;
-  }
-
-  .last-post {
-    position: relative;
+    margin-top: 5px;
+    margin-bottom: 20px;
   }
   
-  .last-post__picture {
-    position: relative;
-  }
-
-  .last-post__picture > img {
-    height: 100%;
-  }
-  
-  .last-post__caption {
-    position: absolute;
-    bottom: 30%;
-    left: 0;
-    color: white;
-    width: 100%;
-    padding-left: 5%;
-    padding-right: 10%;
-  }
-
-  .last-post__title {
-    font-size: 3vw;
-  }
-  
-  .last-post__text {
-    margin-top: 1%;
-    line-height: 2;
-    font-size: 1vw;
+  .news {
+    background-color: #fff;
   }
 
   .news__picture {
     width: 100%;
   }
-  .news__title {
-    font-size: 2vw;
+  .news__info {
+    margin-top: 2.5vw;
+    padding-left: 2.5vw;
+    padding-right: 2.5vw;
   }
+
   .news__text {
-    font-size: 1vw;
+    margin-top: 2.5vw;
+    line-height: 1.5;
   }
   .news__link {
-    width: 25%;
-    font-size: 0.8vw;
-    text-align: center;
-    border: 1px solid black;
-    background: #fff ;
+    margin-top: 2vw;
+    margin-bottom: 2vw;
   }
-  
+  .news__link > a {
+    display: inline-block;
+    box-sizing: content-box;
+    width: auto;
+    padding: 0.5vw;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid black;
+  }
+  .news__link > a:hover {
+    border: 1px solid white;
+    border-bottom: 1px solid black;
+  }  
+  .post:hover {
+    opacity: 0.6;
+  }
+
+  /* title size */
+  .post__title {
+    font-size: 6vw;
+  }
+  .news__title {
+    font-size: 4vw;
+  }
+  /* date size */
+  .post__date {
+    font-size: 6vw;
+  }
+  .post__date > span {
+    font-size: 4vw;
+  }
+
 }
 
   /* desktop */
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 769px) {
   .grid-container {
     grid-gap: 18px;
     padding-left: 36px;
     padding-right: 36px;
-    /* justify-content: space-around; */
   }
-
-  .section {
+  .post {
+    display: flex;
+    flex-direction: column;
     justify-content: space-between;
   }
-  .section:nth-child(odd) {
+  .post:nth-child(odd) {
     flex-direction: row;
   }
-  .section:nth-child(even) {
+  .post:nth-child(even) {
     flex-direction: row-reverse;
   }
-  .section:nth-child(even) .title,
-  .section:nth-child(even) .text {
+  .post:nth-child(even) .post__title,
+  .post:nth-child(even) .post__text {
     text-align: right;
   }
-  
-  .picture {
+  .post__caption {
     width: 50%;
   }
-  .picture > img {
+  .post:nth-child(odd) .post__caption {
+    flex-direction: row;
+  }
+  .post:nth-child(even) .post__caption {
+    flex-direction: row-reverse;
+  }
+  
+  .post__picture {
+    width: 50%;
+  }
+  .post__picture > img {
     height: 100%;
   }
   
-  .section >.caption {
-    width: 50%;
-    /* background-color: rgb(92, 173, 201); */
-  }
-
-  .caption {
-    flex-direction: row;
-  }
-
-  .info {
+  .post__info {
     width: 85%;
   }
+  .post__title {
+    padding-top: 40px;
+  }
+  
+  /* title size */
+  .post__title {
+    font-size: 3vw;
+  }
+  .news__title {
+    font-size: 2vw;
+  }
 
-  .date {
+  /* text */
+  .post__text,
+  .news__text,
+  .news__link {
+    font-size: 1vw;
+  }
+  /* date size */
+  .post__date {
+    font-size: 5vw;
+  }
+  .post__date > span {
+    font-size: 3vw;
+  }
+  
+  .post__text {
+    line-height: 2;
+  }
+
+  .post__date {
+    margin-top: 30px;
     width: 15%;
+    font-size: 3vw;
+  }
+  .post__date > span {
+    font-size: 1.5vw;
   }
 }
 
@@ -217,6 +246,13 @@
     grid-gap: 10px;
     padding-left: 5px;
     padding-right: 5px;
+  }
+
+  /* text */
+  .post__text,
+  .news__text,
+  .news__link {
+    font-size: 2vw;
   }
 }
 
@@ -235,7 +271,66 @@
     padding-right: 4px;
   }
 
+  .news__info {
+    margin-top: 5vw;
+  }
+
+  .news__text {
+    margin-top: 5vw;
+  }
+  .news__link {
+    margin-top: 4vw;
+    margin-bottom: 4vw;
+  }
+
+  /* text */
+  .post__text,
+  .news__text,
+  .news__link {
+    font-size: 3vw;
+  }
+
+  /* ---------------- */
+
   .footer {
     margin-top: 10px;
+  }
+}
+
+/* last post */
+@media screen {
+  .post:last-of-type {
+    border: 1px solid yellow;
+    opacity: 1;
+    display: block;
+    position: relative;
+    z-index: 0;
+  }
+  .post:last-of-type .post__picture {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; 
+    z-index: -1;
+  }
+  
+  .post:last-of-type img {
+    height: 100%;
+  }
+
+  .post:last-of-type .post__caption {
+    display: block;
+    color: #e6e5dd;
+    width: 100%;
+    height: auto;
+    margin-top: 10%;
+    margin-bottom: 10%;
+  }
+  .post:last-of-type .post__info {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+  .post:last-of-type .post__date {
+    display: none;
   }
 }
