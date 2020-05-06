@@ -19,6 +19,7 @@ const userGreetMoreThan20 = {
     'Admin': 'Good evening, dear Admin!'
 };
 
+// main logic
 const login = prompt('Input login');
 if (checkLogin(login)) {
     const password = prompt('Input password');
@@ -28,8 +29,8 @@ if (checkLogin(login)) {
 }
 
 function checkLogin(login) {
-    if (!login) {
-    // if (login === '' || login === null) {
+    // if (!login) {
+    if (login === '' || login === null) {
         showMessage('is an empty line or Esc');
         return false;
     } else if (login.length < 4) {
@@ -51,6 +52,7 @@ function checkPassword(login, password) {
         return true;
     } else {
         showMessage('Wrong password');
+        return false;
     }
 }
 
