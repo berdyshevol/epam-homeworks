@@ -47,11 +47,6 @@ const data = [
   },
   {
     'title': 'credentials.txt'
-  },
-  {
-    title: 'test',
-    folder: true,
-    children: null
   }
 ];
 
@@ -74,13 +69,19 @@ const getIcon = (item) => {
 
 const creatUL = function(array) {
   if (array === null || array.length === 0) {
-    return '<ul class ="empty-folder" hidden>Folder is empty</ul>';
+    return FOLDERISEMPTY;
   }
 
   let li = '';
   for (const item of array) {
     if (item.title) {
-      li += `<li class="${type(item)}"><div class="row">${getIcon(item)}${item.title}</div>`;
+      li += `
+        <li class="${type(item)}">
+          <div class="row">
+            ${getIcon(item)}
+            <input type="text" class="input" value="${item.title}" disabled>
+           </div>
+      `;
       if (item.children === null || Array.isArray(item.children)) {
         li += creatUL(item.children);
       }
@@ -108,11 +109,9 @@ const makeMenu = () => {
   rootNode.insertAdjacentHTML('afterend', str);
 }
 
-// initialization
 creatList(rootNode, data);
 makeMenu();
 
-// events to open/close files
 const hideLi = (event) => {
   const li = event.target.closest('li');
   if (!li || li.className === 'file') {
@@ -126,22 +125,14 @@ const hideLi = (event) => {
       itag[0].classList.toggle('hide');
       itag[1].classList.toggle('hide');
     }
-    // console.dir(ul)
   }
 };
 rootNode.addEventListener('click', hideLi);
 
-// delete function
 const deleteItem = li => {
   const parent = li.parentNode;
-  let unique = false;
-  console.log(li.parentNode.children )
-  if ([...parent.children].length === 1) {
-    unique = true;
-  }
   li.remove();
-  // check if folder is empty
-  if (unique) {
+  if ([...parent.children].length === 0) {
     const folderIsEmpty = document.createElement('ul');
     folderIsEmpty.innerText = FOLDERISEMPTY_TEXT;
     folderIsEmpty.className = 'empty-folder';
@@ -149,16 +140,29 @@ const deleteItem = li => {
     parent.after(folderIsEmpty);
     parent.remove();
   }
-
 };
 
-// events to open/close menu
+const rename = li => {
+  const input = li.querySelector('input');
+  input.disabled = false;
+  input.focus();
+  input.setSelectionRange(0,
+    input.getAttribute('value').lastIndexOf('.')
+  );
+  const inputDisable = () => {
+    input.disabled = true;
+  }
+  input.onchange = inputDisable;
+  input.onblur = inputDisable;
+};
+
 const menuDOM = document.querySelector('.menu');
 
 const disable = buttons => buttons.forEach(button => {
     button.disabled = true;
   }
 );
+
 const enable = buttons => buttons.forEach(button => {
     button.disabled = false;
   }
@@ -169,64 +173,29 @@ const openMenu = event => {
   event.preventDefault();
   const x = event.clientX;
   const y = event.clientY;
-  // enable/disable buttons
   const li = event.target.closest('li');
   if (!li) {
     disable(buttons);
   } else {
     enable(buttons);
   }
-  // console.log(li)
-  // open menu
   menuDOM.classList.remove('hide');
   menuDOM.style.top = `${y}px`;
   menuDOM.style.left = `${x}px`;
-  // listen to close menu
   const closeMenu = event => {
-    // console.log("in close menu", li)
     if (li) {
       const button = event.target.closest('button');
-      console.log(button)
       if (button) {
         if (button.classList.contains('rename')) {
-          console.log('rename');
+          rename(li);
         } else if (button.classList.contains('delete')) {
-          console.log('delete');
           deleteItem(li)
         }
       }
     }
     menuDOM.classList.add('hide');
-    // menuDOM.removeEventListener('click', closeMenu);
   };
   document.onclick = closeMenu;
 };
 
 rootNode.addEventListener('contextmenu', openMenu);
-
-// buttons.forEach(button => {
-//   button.addEventListener('click', (event) => {
-//     // const button = event.target.closest('button');
-//     if (button.className === 'rename') {
-//       console.log("rename");
-//     } else {
-//       console.log('delete');
-//     }
-//     menuDOM.classList.add("hide");
-//   })
-// })
-
-// buttons.forEach(button => {
-//   button.addEventListener('click', (event) => {
-//     const button = event.target.closest('button');
-//     console.log(button);
-//     if (button) {
-//       if (button.className === 'rename') {
-//         console.log("rename");
-//       } else {
-//         console.log('delete');
-//       }
-//     }
-//     menuDOM.classList.add("hide");
-//   })
-// })
