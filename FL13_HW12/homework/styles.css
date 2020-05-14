@@ -9,6 +9,17 @@
 ul {
     list-style: none;
 }
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+input:required + label {
+    color: tomato;
+    font-weight: bold;
+}
+
 .book-app {
     margin: 30px auto;
     max-width: 70%;
