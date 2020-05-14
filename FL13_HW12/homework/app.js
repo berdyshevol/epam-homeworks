@@ -286,6 +286,7 @@ class BookAdd extends Component{
   }
 
   _render() {
+    // TODO: добавил форму, но не помогла
     this._element.innerHTML =  `
         <h2>Book Add</h2>
         <div data-component="book-add">
