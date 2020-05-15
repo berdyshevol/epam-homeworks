@@ -1,3 +1,5 @@
+'use strict';
+
 const root = document.getElementById('root');
 
 const StorageService = {
@@ -18,13 +20,13 @@ const StorageService = {
 
 const BookService = {
   loadBooks() {
-    this._books = StorageService.get(); // TODO: сделать умный загрузчик, который проверяет есть ли в локал сторидж или нет
+    this._books = StorageService.get();
     if (!this._books) {
       this._books = books;
     }
   },
 
-  getAllBooks() { // Просто возвращает массив всех книг
+  getAllBooks() {
     return this._books;
   },
 
@@ -35,22 +37,33 @@ const BookService = {
   addABook(book) {
     book.id = this.getAllBooks().length;;
     this.getAllBooks().push(book);
-    // TODO: add to local storage
     StorageService.save(this.getAllBooks());
     return book.id;
   },
 
   editBook(book) {
     const currentBook = this.getAllBooks()[book.id];
-    // const currentBook = this._books[book.id];
+
     if (currentBook) {
       currentBook.title = book.title;
       currentBook.author = book.author;
       currentBook.imageUrl = book.imageUrl;
       currentBook.plot = book.plot;
     }
-    // console.log(currentBook)
     StorageService.save(this.getAllBooks());
+  }
+};
+
+const DOMService = {
+  getBookFromElement(ul) {
+    const book = {
+      id: ul.dataset.bookId,
+      title: ul.querySelector('[data-input="book-name"]').value,
+      author: ul.querySelector('[data-input="book-author"]').value,
+      imageUrl: ul.querySelector('[data-input="book-image-url"]').value,
+      plot: ul.querySelector('[data-input="book-plot"]').value
+    }
+    return book;
   }
 };
 
@@ -109,6 +122,7 @@ class BookList extends Component {
     this.refresh();
 
     this.on('click', 'edit-btn', (event) => {
+      // event.preventDefault();
       const bookId = event.target.dataset.bookId;
       this.emit('show-edit-form', bookId);
     });
@@ -124,9 +138,6 @@ class BookList extends Component {
   }
 
   _render() {
-    // TODO: assign onAddClick through on (subscribe and emit)
-    // onClick=location.href="${location.pathname}?id=${ book.id }#edit"
-    // onClick=location.href="${location.pathname}#add"
     this._element.innerHTML = `
       <h2>Book List</h2>
       <ul class="book-list">
@@ -138,7 +149,6 @@ class BookList extends Component {
                 <button
                   data-book-id="${ book.id }"
                   data-component="edit-btn" 
-                  
                 >
                   Edit
                 </button>
@@ -153,92 +163,39 @@ class BookList extends Component {
   }
 }
 
-class BookPreview extends Component{
-  constructor({ element }) {
+class BookForm extends Component {
+  constructor({ element, header }) {
     super({ element });
-    // this._render();
-  }
-
-  show(bookId) {
-    this._book =  BookService.getBookById(bookId);
-    if (!this._book) {
-      this.hide();
-      return;
+    this._book = {
+      id: "",
+      title: "",
+      author: "",
+      imageUrl: "",
+      plot: "",
     }
-    super.show();
+    this._header = header || '';
     this._render();
+    this._listenAllButtons();
   }
 
-  _render() {
-    this._element.innerHTML =  `
-        <h2>Book Preview</h2>
-        <ul>
-          <li>
-            <label>Book name:
-              <input type="text" disabled value="${this._book.title}">
-            </label>
-          </li>
-          <li>
-            <label>Author:
-              <input type="text" disabled value="${this._book.author}">
-            </label>
-          </li>
-          <li>
-            <label>Image Url:
-              <input type="url" disabled value="${this._book.imageUrl}">
-            </label>
-          </li>
-          <li>
-            <label>Plot:
-              <textarea disabled rows="10" cols="50">
-                ${this._book.plot}
-              </textarea>
-            </label>
-          </li>
-        </ul>
-    `;
-  }
-}
-
-class BookEdit extends Component{
-  constructor({ element }) {
-    super({ element });
-    // this._render();
-
+  _listenAllButtons() {
     this.on('click', 'cancel-btn', (event) => {
       this.emit('click-on-cancel-btn');
     });
 
     this.on('click', 'save-btn', (event) => {
-      const bookEdit = event.target.closest('[data-component="book-edit"]');
-      const ul = bookEdit.querySelector('[data-book-id]');
-      const book = {
-        id: ul.dataset.bookId,
-        title: ul.querySelector('[data-input="book-name"]').value,
-        author: ul.querySelector('[data-input="book-author"]').value,
-        imageUrl: ul.querySelector('[data-input="book-image-url"]').value,
-        plot: ul.querySelector('[data-input="book-plot"]').value
-      }
-      this.emit('edit-book', book);
+      const ul =  [...this._element.getElementsByTagName('ul')][0];
+      const book = DOMService.getBookFromElement(ul);
+      this.emit('click-save-btn', book);
     });
-
-  }
-
-  show(bookId) {
-    this._book =  BookService.getBookById(bookId);
-    if (!this._book) {
-      this.hide();
-      return;
-    }
-    super.show();
-    this._render();
   }
 
   _render() {
+    // TODO: refactor
     this._element.innerHTML = `
-        <h2>Book Edit</h2>
-        <div data-component="book-edit">
-        <ul data-book-id="${ this._book.id }">
+      <h2>${ this._header }</h2>
+      <form data-component="book-form">
+        <ul class="form-ul" data-book-id="${ this._book.id }">
           <li>
             <label>Book name:
               <input type="text" data-input="book-name" required value="${this._book.title}">
@@ -250,92 +207,107 @@ class BookEdit extends Component{
             </label>
           </li>
           <li>
-            <label>Image Url:
+            <label class="url-label">Image Url:
               <input type="url" data-input="book-image-url" required value="${this._book.imageUrl}">
             </label>
+            <img 
+              class="url-img" 
+              src="${ this._book.imageUrl }" 
+              alt="${this._book.imageUrl}" 
+              height="100px" 
+              hidden
+            >
           </li>
           <li>
             <label>Plot:
-              <textarea rows="10" cols="50" required data-input="book-plot">
-                ${this._book.plot}
-              </textarea>
+              <textarea rows="5" cols="50" 
+                required 
+                data-input="book-plot"
+                placeholder="Please, input plot of the book"
+              >${this._book.plot}</textarea>
             </label>
           </li>
         </ul>
-        <button data-component="cancel-btn">Cancel</button>
-        <button data-component="save-btn">Save</button>
-        </div>
+        <button data-component="cancel-btn" type="submit">Cancel</button>
+        <button data-component="save-btn" type="submit">Save</button>
+      </form>
     `;
   }
 
+  fillForm(book) {
+    this._book.id = book.id;
+    this._book.title = book.title;
+    this._book.author = book.author;
+    this._book.imageUrl = book.imageUrl;
+    this._book.plot = book.plot;
+  }
 }
 
-class BookAdd extends Component{
+class BookPreview extends BookForm {
   constructor({ element }) {
-    super({ element });
-
-    // TODO: do I need it????????????
-    // this._render();
-
-    this.on('click', 'cancel-btn', (event) => {
-      this.emit('click-on-cancel-btn');
-    });
-
-    this.on('click', 'save-btn', (event) => {
-      const bookEdit = event.target.closest('[data-component="book-add"]');
-      const ul = bookEdit.querySelector('[data-book-id]');
-      const book = {
-        id: -1,
-        title: ul.querySelector('[data-input="book-name"]').value,
-        author: ul.querySelector('[data-input="book-author"]').value,
-        imageUrl: ul.querySelector('[data-input="book-image-url"]').value,
-        plot: ul.querySelector('[data-input="book-plot"]').value
-      }
-      this.emit('add-new-book', book);
-      console.log('in save')
-    });
+    super({ element, header: 'Book Preview'});
   }
 
-  show() {
-    super.show();
-    this._render();
+  _disableAllInputs() {
+    this._element.querySelectorAll('input').forEach(input =>
+      input.disabled = true
+    );
+    this._element.querySelector('textarea').disabled = true;
+  }
+
+  _hideButtons() {
+    this._element.querySelectorAll('button').forEach(btn =>
+      btn.hidden = true
+    );
+  }
+
+  _showPic() {
+    this._element.querySelector(".url-img").hidden = false;
+    this._element.querySelector(".url-label").hidden = true;
   }
 
   _render() {
-    // TODO: добавил форму, но не помогла
-    this._element.innerHTML =  `
-        <h2>Book Add</h2>
-        <div data-component="book-add">
-        <form action="#">
-        <ul data-book-id="new-book">
-          <li>
-            <label>Book name:
-              <input type="text" data-input="book-name" required>
-            </label>
-          </li>
-          <li>
-            <label>Author:
-              <input type="text" data-input="book-author" required>
-            </label>
-          </li>
-          <li>
-            <label>Image Url:
-              <input type="url" data-input="book-image-url" required>
-            </label>
-          </li>
-          <li>
-            <label>Plot:
-              <textarea rows="10" cols="50" data-input="book-plot" required>
-                
-              </textarea>
-            </label>
-          </li>
-        </ul>
-        <button data-component="cancel-btn">Cancel</button>
-        <button data-component="save-btn" type="submit">Save</button>
-        </form>
-        </div>
-    `;
+    super._render();
+    this._disableAllInputs();
+    this._hideButtons();
+    this._showPic();
+  }
+
+  show(bookId) {
+    const book =  BookService.getBookById(bookId);
+    if (!book) {
+      this.hide();
+      return;
+    }
+
+    this.fillForm(book);
+    this._render();
+    super.show();
+  }
+}
+
+class BookEdit extends BookForm {
+  constructor({ element }) {
+    super({ element, header: 'Edit Book' });
+  }
+
+  show(bookId) {
+    const book =  BookService.getBookById(bookId);
+    if (!book) {
+      this.hide();
+      return;
+    }
+
+    this.fillForm(book);
+    this._render();
+    super.show();
+    // this._listenAllButtons();
+  }
+}
+
+class BookAdd extends BookForm {
+  constructor({ element }) {
+    super({ element, header: 'Add Book' });
   }
 }
 
@@ -347,8 +319,7 @@ class BooksPage {
     this._initBookPreview();
     this._initBookEdit();
     this._initBookAdd();
-    window.addEventListener('load', this.updateView);
-    window.addEventListener('hashchange', this.updateView);
+    this._listenToUrlChange();
   }
 
   _initBookList() {
@@ -376,22 +347,14 @@ class BooksPage {
     });
     this._bookEdit.hide();
 
-    this._bookEdit.subscribe('edit-book', (book) => {
-      console.log(book);
+    this._bookEdit.subscribe('click-save-btn', (book) => {
       BookService.editBook(book);
-      console.log(books)
-      this._bookList.refresh();
-      this._bookPreview.show(book.id);
-      this._bookEdit.hide();
-      window.history.pushState(null, null, `?id=${book.id}#preview`);
-      // TODO: Book successfully updated in 300ms
-      setTimeout(() => alert('Book successfully updated'), 300);
+      const id = book.id;
+      this._reopenPage(id);
     });
 
     this._bookEdit.subscribe('click-on-cancel-btn', () => {
-      // console.log('click-on-cancel-btn ');
       if (confirm('Discard changes')) {
-        // console.log('yes');
         history.back();
       }
     });
@@ -403,28 +366,56 @@ class BooksPage {
     });
     this._bookAdd.hide();
 
-    this._bookAdd.subscribe('add-new-book', (book) => {
-      console.log(book);
+    this._bookAdd.subscribe('click-save-btn', (book) => {
       const id = BookService.addABook(book);
-      // console.log(books)
-      this._bookList.refresh();
-      this._bookPreview.show(id);
-      this._bookAdd.hide();
-      window.history.pushState(null, null, `?id=${id}#preview`);
-      // TODO: Book successfully updated in 300ms  -- ???????????????
-      // setTimeout(() => alert('Book successfully updated'), 300);
+      this._reopenPage(id);
     });
 
     this._bookAdd.subscribe('click-on-cancel-btn', () => {
-      // console.log('click-on-cancel-btn ');
       if (confirm('Discard changes')) {
-        // console.log('yes');
         history.back();
       }
     });
   }
 
-  _getId = search => {
+  _reopenPage(id) {
+    this._bookList.refresh();
+    this._bookPreview.show(id);
+    this._bookEdit.hide();
+    this._bookAdd.hide();
+    window.history.pushState(null, null, `?id=${id}#preview`);
+    setTimeout(() => alert('Book successfully updated'), 300);
+  }
+
+  _listenToUrlChange() {
+    const updateView =() => {
+      const mode = location.hash.slice(1);
+      const search = location.search; // TODO: сделать чтобы отслеживала ошибки
+      const phoneId = this._getId(search);
+      this._bookList.refresh();
+      if (mode === 'preview') {
+        this._bookPreview.show(phoneId);
+        this._bookAdd.hide();
+        this._bookEdit.hide();
+      } else if (mode === 'add') {
+        this._bookPreview.hide();
+        this._bookAdd.show();
+        this._bookEdit.hide()
+      } else if (mode === 'edit') {
+        this._bookPreview.hide();
+        this._bookAdd.hide();
+        this._bookEdit.show(phoneId)
+      } else {
+        this._bookPreview.hide();
+        this._bookAdd.hide();
+        this._bookEdit.hide()
+      }
+    }
+    window.addEventListener('load', updateView);
+    window.addEventListener('hashchange', updateView);
+  }
+
+  _getId(search) {
     const id = search.match(/id=/g);
     if (!id || id.length > 1) {
       return null;
@@ -432,38 +423,10 @@ class BooksPage {
     return search.slice(4);
   }
 
-  updateView = () => {
-    const mode = location.hash.slice(1);
-    const search = location.search; // TODO: сделать чтобы отслеживала ошибки
-    const phoneId = this._getId(search);
-    // console.log("on load "+mode + ' ' + search);
-    // TODO: здесь подписаться на ивенты add edit preview На них не получится через on только через subscribe и emit
-    this._bookList.refresh();
-    if (mode === 'preview') {
-      this._bookPreview.show(phoneId);
-      this._bookAdd.hide();
-      this._bookEdit.hide();
-    } else if (mode === 'add') {
-      this._bookPreview.hide();
-      this._bookAdd.show();
-      this._bookEdit.hide()
-    } else if (mode === 'edit') {
-      this._bookPreview.hide();
-      this._bookAdd.hide();
-      this._bookEdit.show(phoneId)
-    } else {
-      this._bookPreview.hide();
-      this._bookAdd.hide();
-      this._bookEdit.hide()
-    }
-
-  }
-
   _render() {
     this._element.innerHTML = `
     <div class="book-app">
       <div data-component="book-list"></div>
-      <hr>
       <div data-component="book-preview"></div>
       <div data-component="book-edit-form"></div>
       <div data-component="book-add-form"></div>
