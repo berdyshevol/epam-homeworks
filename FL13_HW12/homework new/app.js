@@ -1,4 +1,4 @@
-'use strict';
+// 'use strict';
 
 const root = document.getElementById('root');
 
@@ -26,7 +26,7 @@ const BookService = {
     }
   },
 
-  getAllBooks() {
+  getAllBooks() { // Просто возвращает массив всех книг
     return this._books;
   },
 
@@ -37,6 +37,7 @@ const BookService = {
   addABook(book) {
     book.id = this.getAllBooks().length;;
     this.getAllBooks().push(book);
+    // TODO: add to local storage
     StorageService.save(this.getAllBooks());
     return book.id;
   },
@@ -149,6 +150,7 @@ class BookList extends Component {
                 <button
                   data-book-id="${ book.id }"
                   data-component="edit-btn" 
+                  
                 >
                   Edit
                 </button>
@@ -210,13 +212,7 @@ class BookForm extends Component {
             <label class="url-label">Image Url:
               <input type="url" data-input="book-image-url" required value="${this._book.imageUrl}">
             </label>
-            <img 
-              class="url-img" 
-              src="${ this._book.imageUrl }" 
-              alt="${this._book.imageUrl}" 
-              height="100px" 
-              hidden
-            >
+            <img class="url-img" src="${ this._book.imageUrl }" alt="${this._book.imageUrl}" height="100px" hidden>
           </li>
           <li>
             <label>Plot:
@@ -248,7 +244,7 @@ class BookPreview extends BookForm {
     super({ element, header: 'Book Preview'});
   }
 
-  _disableAllInputs() {
+  _disable() {
     this._element.querySelectorAll('input').forEach(input =>
       input.disabled = true
     );
@@ -268,7 +264,7 @@ class BookPreview extends BookForm {
 
   _render() {
     super._render();
-    this._disableAllInputs();
+    this._disable();
     this._hideButtons();
     this._showPic();
   }
@@ -319,7 +315,8 @@ class BooksPage {
     this._initBookPreview();
     this._initBookEdit();
     this._initBookAdd();
-    this._listenToUrlChange();
+    window.addEventListener('load', this.updateView);
+    window.addEventListener('hashchange', this.updateView);
   }
 
   _initBookList() {
@@ -345,7 +342,7 @@ class BooksPage {
     this._bookEdit = new BookEdit({
       element: document.querySelector('[data-component="book-edit-form"]')
     });
-    this._bookEdit.hide();
+    // this._bookEdit.hide();
 
     this._bookEdit.subscribe('click-save-btn', (book) => {
       BookService.editBook(book);
@@ -383,36 +380,8 @@ class BooksPage {
     this._bookPreview.show(id);
     this._bookEdit.hide();
     this._bookAdd.hide();
-    window.history.pushState(null, null, `?id=${id}#preview`);
+    window.history.pushState(null, null, `?id=${ id }#preview`);
     setTimeout(() => alert('Book successfully updated'), 300);
-  }
-
-  _listenToUrlChange() {
-    const updateView =() => {
-      const mode = location.hash.slice(1);
-      const search = location.search; // TODO: сделать чтобы отслеживала ошибки
-      const phoneId = this._getId(search);
-      this._bookList.refresh();
-      if (mode === 'preview') {
-        this._bookPreview.show(phoneId);
-        this._bookAdd.hide();
-        this._bookEdit.hide();
-      } else if (mode === 'add') {
-        this._bookPreview.hide();
-        this._bookAdd.show();
-        this._bookEdit.hide()
-      } else if (mode === 'edit') {
-        this._bookPreview.hide();
-        this._bookAdd.hide();
-        this._bookEdit.show(phoneId)
-      } else {
-        this._bookPreview.hide();
-        this._bookAdd.hide();
-        this._bookEdit.hide()
-      }
-    }
-    window.addEventListener('load', updateView);
-    window.addEventListener('hashchange', updateView);
   }
 
   _getId(search) {
@@ -421,6 +390,32 @@ class BooksPage {
       return null;
     }
     return search.slice(4);
+  }
+
+  updateView = () => {
+    const mode = location.hash.slice(1);
+    const search = location.search; // TODO: сделать чтобы отслеживала ошибки
+    const phoneId = this._getId(search);
+
+    this._bookList.refresh();
+
+    if (mode === 'preview') {
+      this._bookPreview.show(phoneId);
+      this._bookAdd.hide();
+      this._bookEdit.hide();
+    } else if (mode === 'add') {
+      this._bookPreview.hide();
+      this._bookAdd.show();
+      this._bookEdit.hide()
+    } else if (mode === 'edit') {
+      this._bookPreview.hide();
+      this._bookAdd.hide();
+      this._bookEdit.show(phoneId)
+    } else {
+      this._bookPreview.hide();
+      this._bookAdd.hide();
+      this._bookEdit.hide()
+    }
   }
 
   _render() {
