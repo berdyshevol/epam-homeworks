@@ -1,6 +1,8 @@
-// 'use strict';
+'use strict';
 
 const root = document.getElementById('root');
+
+const TIMEOUT = 300;
 
 const StorageService = {
   _key: 'book-list-app-books',
@@ -26,7 +28,7 @@ const BookService = {
     }
   },
 
-  getAllBooks() { // Просто возвращает массив всех книг
+  getAllBooks() {
     return this._books;
   },
 
@@ -35,7 +37,7 @@ const BookService = {
   },
 
   addABook(book) {
-    book.id = this.getAllBooks().length;;
+    book.id = this.getAllBooks().length;
     this.getAllBooks().push(book);
     // TODO: add to local storage
     StorageService.save(this.getAllBooks());
@@ -128,7 +130,7 @@ class BookList extends Component {
       this.emit('show-edit-form', bookId);
     });
 
-    this.on('click', 'add-btn', (event) => {
+    this.on('click', 'add-btn', () => {
       this.emit('show-add-form');
     });
   }
@@ -169,62 +171,74 @@ class BookForm extends Component {
   constructor({ element, header }) {
     super({ element });
     this._book = {
-      id: "",
-      title: "",
-      author: "",
-      imageUrl: "",
-      plot: "",
+      id: '',
+      title: '',
+      author: '',
+      imageUrl: '',
+      plot: ''
     }
     this._header = header || '';
     this._render();
     this._listenAllButtons();
+    // this._setValidations();
   }
 
   _listenAllButtons() {
     this.on('click', 'cancel-btn', (event) => {
+      event.preventDefault();
       this.emit('click-on-cancel-btn');
     });
 
     this.on('click', 'save-btn', (event) => {
-      const ul =  [...this._element.getElementsByTagName('ul')][0];
+      event.preventDefault();
+      const ul = [...this._element.getElementsByTagName('ul')][0];
       const book = DOMService.getBookFromElement(ul);
       this.emit('click-save-btn', book);
     });
   }
 
+  // _setValidations() {
+  //   const required = [...this._element.querySelectorAll('.required')];
+  //   required.forEach(elem => {
+  //     elem.addEventListener('input', (event) => {
+  //       console.log(event.target.value)
+  //     })
+  //   })
+  // }
+
   _render() {
     // TODO: refactor
     this._element.innerHTML = `
       <h2>${ this._header }</h2>
-      <form data-component="book-form">
+      <form data-component="book-form" action="#" mathod="post">
         <ul class="form-ul" data-book-id="${ this._book.id }">
           <li>
             <label>Book name:
-              <input type="text" data-input="book-name" required value="${this._book.title}">
+              <input type="text" data-input="book-name" value="${this._book.title}" required>
             </label>
           </li>
           <li>
             <label>Author:
-              <input type="text" data-input="book-author" required value="${this._book.author}">
+              <input type="text" data-input="book-author" value="${this._book.author}" required>
             </label>
           </li>
           <li>
             <label class="url-label">Image Url:
-              <input type="url" data-input="book-image-url" required value="${this._book.imageUrl}">
+              <input type="url" data-input="book-image-url" value="${this._book.imageUrl}" required>
             </label>
             <img class="url-img" src="${ this._book.imageUrl }" alt="${this._book.imageUrl}" height="100px" hidden>
           </li>
           <li>
             <label>Plot:
               <textarea rows="5" cols="50" 
-                required 
                 data-input="book-plot"
                 placeholder="Please, input plot of the book"
+                required
               >${this._book.plot}</textarea>
             </label>
           </li>
         </ul>
-        <button data-component="cancel-btn" type="submit">Cancel</button>
+        <button data-component="cancel-btn" type="reset">Cancel</button>
         <button data-component="save-btn" type="submit">Save</button>
       </form>
     `;
@@ -245,21 +259,21 @@ class BookPreview extends BookForm {
   }
 
   _disable() {
-    this._element.querySelectorAll('input').forEach(input =>
+    this._element.querySelectorAll('input').forEach(input => {
       input.disabled = true
-    );
+    });
     this._element.querySelector('textarea').disabled = true;
   }
 
   _hideButtons() {
-    this._element.querySelectorAll('button').forEach(btn =>
+    this._element.querySelectorAll('button').forEach(btn => {
       btn.hidden = true
-    );
+    });
   }
 
   _showPic() {
-    this._element.querySelector(".url-img").hidden = false;
-    this._element.querySelector(".url-label").hidden = true;
+    this._element.querySelector('.url-img').hidden = false;
+    this._element.querySelector('.url-label').hidden = true;
   }
 
   _render() {
@@ -270,7 +284,7 @@ class BookPreview extends BookForm {
   }
 
   show(bookId) {
-    const book =  BookService.getBookById(bookId);
+    const book = BookService.getBookById(bookId);
     if (!book) {
       this.hide();
       return;
@@ -288,7 +302,7 @@ class BookEdit extends BookForm {
   }
 
   show(bookId) {
-    const book =  BookService.getBookById(bookId);
+    const book = BookService.getBookById(bookId);
     if (!book) {
       this.hide();
       return;
@@ -297,7 +311,6 @@ class BookEdit extends BookForm {
     this.fillForm(book);
     this._render();
     super.show();
-    // this._listenAllButtons();
   }
 }
 
@@ -315,8 +328,7 @@ class BooksPage {
     this._initBookPreview();
     this._initBookEdit();
     this._initBookAdd();
-    window.addEventListener('load', this.updateView);
-    window.addEventListener('hashchange', this.updateView);
+    this._listenToUrlChange();
   }
 
   _initBookList() {
@@ -325,9 +337,11 @@ class BooksPage {
     });
     this._bookList.subscribe('show-edit-form', (bookId) => {
       location.href = `${location.pathname}?id=${ bookId }#edit`;
+      // window.history.pushState(null, null, `?id=${ id }#edit`); // -------------
     });
     this._bookList.subscribe('show-add-form', () => {
       location.href = `${location.pathname}#add`;
+      // window.history.pushState(null, null, `?#add`); // ---------------
     });
   }
 
@@ -342,7 +356,7 @@ class BooksPage {
     this._bookEdit = new BookEdit({
       element: document.querySelector('[data-component="book-edit-form"]')
     });
-    // this._bookEdit.hide();
+    this._bookEdit.hide();
 
     this._bookEdit.subscribe('click-save-btn', (book) => {
       BookService.editBook(book);
@@ -376,46 +390,53 @@ class BooksPage {
   }
 
   _reopenPage(id) {
+    // window.history.pushState(null, null, `?id=${ id }#preview`); //---------------
+    location.href = `${location.pathname}?id=${ id }#preview`;
+    setTimeout(() => alert('Book successfully updated'), TIMEOUT);
     this._bookList.refresh();
     this._bookPreview.show(id);
     this._bookEdit.hide();
     this._bookAdd.hide();
-    window.history.pushState(null, null, `?id=${ id }#preview`);
-    setTimeout(() => alert('Book successfully updated'), 300);
   }
 
   _getId(search) {
+    const idPosition = 4;
     const id = search.match(/id=/g);
     if (!id || id.length > 1) {
       return null;
     }
-    return search.slice(4);
+    return search.slice(idPosition);
   }
 
-  updateView = () => {
-    const mode = location.hash.slice(1);
-    const search = location.search; // TODO: сделать чтобы отслеживала ошибки
-    const phoneId = this._getId(search);
+  _listenToUrlChange() {
+    const updateView = () => {
+      const mode = location.hash.slice(1);
+      const search = location.search; // TODO: сделать чтобы отслеживала ошибки
+      const phoneId = this._getId(search);
 
-    this._bookList.refresh();
+      this._bookList.refresh();
 
-    if (mode === 'preview') {
-      this._bookPreview.show(phoneId);
-      this._bookAdd.hide();
-      this._bookEdit.hide();
-    } else if (mode === 'add') {
-      this._bookPreview.hide();
-      this._bookAdd.show();
-      this._bookEdit.hide()
-    } else if (mode === 'edit') {
-      this._bookPreview.hide();
-      this._bookAdd.hide();
-      this._bookEdit.show(phoneId)
-    } else {
-      this._bookPreview.hide();
-      this._bookAdd.hide();
-      this._bookEdit.hide()
+      if (mode === 'preview') {
+        this._bookPreview.show(phoneId);
+        this._bookAdd.hide();
+        this._bookEdit.hide();
+      } else if (mode === 'add') {
+        this._bookPreview.hide();
+        this._bookAdd.show();
+        this._bookEdit.hide()
+      } else if (mode === 'edit') {
+        this._bookPreview.hide();
+        this._bookAdd.hide();
+        this._bookEdit.show(phoneId)
+      } else {
+        this._bookPreview.hide();
+        this._bookAdd.hide();
+        this._bookEdit.hide()
+      }
     }
+    window.addEventListener('load', updateView);
+    window.addEventListener('hashchange', updateView);
+    // window.addEventListener('popstate', updateView);
   }
 
   _render() {
