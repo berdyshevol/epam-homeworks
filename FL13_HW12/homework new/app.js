@@ -181,6 +181,12 @@ class BookForm extends Component {
     this._render();
     this._listenAllButtons();
     // this._setValidations();
+    // this._element
+    //   .querySelector('[data-component="book-form"]')
+    //   .addEventListener('submit', event => {
+    //
+    //   });
+
   }
 
   _listenAllButtons() {
@@ -189,7 +195,14 @@ class BookForm extends Component {
       this.emit('click-on-cancel-btn');
     });
 
-    this.on('click', 'save-btn', (event) => {
+    // this.on('click', 'save-btn', (event) => {
+    //   event.preventDefault();
+    //   const ul = [...this._element.getElementsByTagName('ul')][0];
+    //   const book = DOMService.getBookFromElement(ul);
+    //   this.emit('click-save-btn', book);
+    // });
+
+    this.on('submit', 'book-form', (event) => {
       event.preventDefault();
       const ul = [...this._element.getElementsByTagName('ul')][0];
       const book = DOMService.getBookFromElement(ul);
