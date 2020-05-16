@@ -24,7 +24,8 @@ const BookService = {
   loadBooks() {
     this._books = StorageService.get();
     if (!this._books) {
-      this._books = books;
+      this._books = localStorage
+        .getItem('book-list-app-books-from-books.js');
     }
   },
 
