@@ -8,20 +8,96 @@
 
 ul {
     list-style: none;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0;
+}
+
+li {
+    width: 100%;
 }
 
 a {
     text-decoration: none;
     color: black;
+    width: 100%;
+    margin-left: 10px;
+    border-radius: 5px;
+    line-height: 1.2;
 }
 
-input:required + label {
-    color: tomato;
-    font-weight: bold;
+button {
+    border-radius: 3px;
+    border: whitesmoke;
+    background-color: silver;
 }
 
 .book-app {
-    margin: 30px auto;
-    max-width: 70%;
-    min-width: 400px;
+    margin: 10px auto;
+    max-width: 80%;
+    min-width: 250px;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
 }
+
+.book-app [data-component="book-list"],
+.book-app [data-component="book-add-form"],
+.book-app [data-component="book-edit-form"],
+.book-app [data-component="book-preview"] {
+    padding: 0px 40px 40px 40px;
+    background-color: whitesmoke;
+    border-radius: 5px;
+    border: 1px solid darkgray;
+    box-shadow: 0 0 5px darkgray;
+    margin-top: 10px;
+}
+
+.book-app [data-component="book-preview"] input {
+    background-color: inherit;
+    border: none;
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.book-app [data-component="book-preview"] textarea {
+    background-color: inherit;
+    border: none;
+    margin-left: 0;
+    padding-left: 0;
+}
+
+h2 {
+    text-align: center;
+}
+
+.book-app [data-component="book-list"] li {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row-reverse;
+    margin-top: 5px;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.book-app [data-component="book-list"] a:hover {
+    background-color: lightgray;
+}
+
+input {
+    width: 100%;
+}
+textarea {
+    width: 100%;
+}
+
+.form-ul li {
+    margin-top: 10px;
+}
+
+
+
+
+

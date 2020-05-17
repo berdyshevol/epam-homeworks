@@ -1,12 +1,99 @@
-.html,
-.body {
+html,
+body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    background-color: #f4f9f5;
     width: 100%;
+    font-family: Arial, sans-serif;
 }
 
-.flex {
+.wrap {
+    margin: 50px auto;
+    width: 800px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    padding-top: 5px;
+    padding-left: 3px;
+}
+
+.choose {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.label {
+    margin-left: 15px;
+    margin-right: 38px;
+}
+
+label {
+    font-size: 12px;
+    font-weight: 500;
+    font-family: Arial, sans-serif;
+}
+
+button {
+    border-radius: 4px;
+    background-color: #11d6a9;
+    border: none;
+    color: white;
+    height: 20px;
+    width: 97px;
+    margin-right: 4px;
+    padding: 0;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: Arial, sans-serif;
+    cursor: pointer;
+}
+
+input {
+    height: 20px;
+    cursor: pointer;
+}
+
+.generate-byn {
+    width: 270px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.blocks-number {
+    font-size: 13px;
+    align-self: center;
+}
+
+.mosaic {
+    margin-top: 20px;
+    margin-bottom: 100px;
+    background-color: #fff;
+    min-height: 300px;
+}
+
+#mosaic-game-grid {
+    width: 800px;
+    height: 500px;
+    margin: 0 auto;
+    border: 2px solid #A5A5A5;
     display: grid;
-
+    grid-gap: 1px;
+    background-color: #A5A5A5;
+    box-sizing: border-box;
 }
+
+.block {
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.block-active {
+    border: 1px solid red;
+}
+

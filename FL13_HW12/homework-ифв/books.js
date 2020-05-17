@@ -23,5 +23,3 @@ const books = [
     plot: 'Author Ilya Grigorik, a web performance engineer at Google, demonstrates performance optimization best practices for TCP, UDP, and TLS protocols, and explains unique wireless and mobile network optimization requirements. You’ll then dive into performance characteristics of technologies such as HTTP 2.0, client-side network scripting with XHR, real-time streaming with SSE and WebSocket, and P2P communication with WebRTC.'
   }
 ];
-
-localStorage.setItem('book-list-app-books-from-books.js', JSON.stringify(books));

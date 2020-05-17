@@ -6,17 +6,30 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="root"></div>
-  <script src="./app.js"></script>
-  <div class="flex">
-    <div class="div1"></div>
-    <div class="div2"></div>
-    <div class="div3"></div>
-    <div class="div4"></div>
-    <div class="div5"></div>
-    <div class="div6"></div>
-    <div class="div7"></div>
-
+  <div class="wrap">
+    <header class="header">
+      <div class="choose">
+        <input type="color" id="border-color" value="#A5A5A5">
+        <div class="label">
+          <label for="border-color">Mosaic border color</label>
+        </div>
+        <input type="color" id="block-background-color" value="#6BCDCC">
+        <div class="label">
+          <label for="block-background-color">Fragment background color</label>
+        </div>
+      </div>
+      <div class="generate-byn">
+        <span class="blocks-number">Blocks number: 0</span>
+        <button type="button" id="new-game-btn">
+          Generate New
+        </button>
+      </div>
+    </header>
+    <main class="mosaic">
+      <div id="mosaic-game-grid"></div>
+    </main>
   </div>
+<!--  <script src="./mosaic.js"></script>-->
+  <script src="./app.js"></script>
 </body>
 </html>
