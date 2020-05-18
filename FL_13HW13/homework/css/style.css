@@ -1,0 +1,49 @@
+
+/* .header {
+  padding: 0 20px;
+} */
+
+/* // Extra small devices (portrait phones, less than 576px) */
+/* // No media query since this is the default in Bootstrap */
+
+/* // Small devices (landscape phones, 576px and up) */
+/* @media (min-width: 576px) {
+  .padding {
+    margin: 0 50px;
+  }
+} */
+
+/* // Medium devices (tablets, 768px and up) */
+/* @media (min-width: 768px) {
+  .padding {
+    margin: 0 100px;
+  }
+} */
+
+/* // Large devices (desktops, 992px and up) */
+/* @media (min-width: 992px) {
+
+} */
+
+.button {
+  background-color: #ff7f50;
+  color:white;
+}
+
+.subscribe-button {
+  background-color: #ff7f50;
+  color:white;
+  /* font-weight: 500; */
+  /* width: 100%; */
+  padding: 5px;
+}
+
+
+
+/* .game-section {
+  text-align: center;
+}
+
+.footer-copyright {
+  text-align: center;
+} */
