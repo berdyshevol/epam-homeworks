@@ -28,49 +28,50 @@ Student.prototype.getHomeworkResult = function() {
   return this[_homeworkResult];
 }
 
-const _students = Symbol('_students');
-const _failedLimit = Symbol('_failedLimit');
-
 function FrontendLab(students, failedLimit) {
-  this[_students] = students.map(student =>
+  const _students = students.map(student =>
     new Student(student.name, student.email)
   );
-  this[_failedLimit] = failedLimit;
-}
+  const _failedLimit = failedLimit;
 
-FrontendLab.prototype.addHomeworkResults = function({topic, results}) {
-  results
-    .forEach( result => {
-      const student = this[_students].find( student =>
-        student.getEmail() === result.email
-      );
-      if (student) {
-        student.addHomeworkResult(topic, result.success);
-      }
-    });
-}
+  const methods = {};
 
-FrontendLab.prototype.printStudentsList = function() {
-  this[_students].forEach(student => {
-    console.log(`name: ${ student.getName() }, email: ${ student.getEmail() }`);
-    console.log(student.getHomeworkResult());
-  });
-
-}
-
-FrontendLab.prototype.printStudentsEligibleForTest = function() {
-  const countFailures = student =>
-    student[_homeworkResult]
-      .reduce((count, result) =>
-        count + (result.success === false ? 1 : 0)
-      , 0);
-
-  this[_students]
-    .filter(student => countFailures(student) <= this[_failedLimit])
-    .forEach(student => {
+  methods.printStudentsList = function() {
+    _students.forEach(student => {
       console.log(`name: ${ student.getName() }, email: ${ student.getEmail() }`);
+      console.log(student.getHomeworkResult());
     });
+  }
+
+  methods.addHomeworkResults = function({topic, results}) {
+    results
+      .forEach( result => {
+        const student = _students.find( student =>
+          student.getEmail() === result.email
+        );
+        if (student) {
+          student.addHomeworkResult(topic, result.success);
+        }
+      });
+  }
+
+  methods.printStudentsEligibleForTest = function() {
+    const countFailures = student =>
+      student.getHomeworkResult()
+        .reduce((count, result) =>
+          count + (result.success === false ? 1 : 0)
+          , 0);
+
+    _students
+      .filter(student => countFailures(student) <= _failedLimit)
+      .forEach(student => {
+        console.log(`name: ${ student.getName() }, email: ${ student.getEmail() }`);
+      });
+  }
+  return methods;
 }
+
+
 
 // test
 
@@ -83,10 +84,14 @@ FrontendLab.prototype.printStudentsEligibleForTest = function() {
 // const lab = new FrontendLab(listOfStudents, 1);
 // lab.addHomeworkResults(homeworkResults[0]);
 // lab.addHomeworkResults(homeworkResults[1]);
-// // lab.printStudentsList();
-//
-// // lab.printStudentsEligibleForTest();
+
+// lab.printStudentsList();
+
+// lab.printStudentsEligibleForTest();
+
 // lab.addHomeworkResults(homeworkResults[2]);
 // lab.addHomeworkResults(homeworkResults[3]);
 // lab.addHomeworkResults(homeworkResults[4]);
 // lab.printStudentsEligibleForTest();
+
+// console.log(lab)
