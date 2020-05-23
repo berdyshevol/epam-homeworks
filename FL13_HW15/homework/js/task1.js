@@ -1,11 +1,21 @@
 'use strict';
 
 function assign(target, ...sources) {
-  for (const obj of sources) {
-    for (const key in obj) {
-      target[key] = obj[key];
+  // for (const obj of sources) {
+  //   if (obj) {
+  //     for (const key in obj) {
+  //       target[key] = obj[key];
+  //     }
+  //   }
+  // }
+
+  sources.forEach(obj => {
+    if (obj) {
+      Object.keys(obj).forEach(key => {
+        target[key] = obj[key];
+      })
     }
-  }
+  });
   return target;
 }
 
@@ -14,22 +24,23 @@ function assign(target, ...sources) {
 // test Object.assign(target, ...sources)
 
 function compare(obj1, obj2) {
-  return JSON.stringify(obj1) == JSON.stringify(obj2)
+  return JSON.stringify(obj1) === JSON.stringify(obj2)
 }
 
 // const obj = { a: 1 };
 // const copy = Object.assign({}, obj);
 // console.log('Object.assign', copy); // { a: 1 }
-// const mycopy = Object.myassign({}, obj);
+// const mycopy = assign({}, obj);
 // console.log('Object.assign', mycopy); // { a: 1 }
 // console.assert(compare(copy, mycopy));
 
 // let obj1 = { a: 0 , b: { c: 0}};
 // let obj2 = Object.assign({}, obj1);
-// console.log(JSON.stringify(obj2)); // { "a": 0, "b": { "c": 0}}
-// let myobj2 = Object.assign({}, obj1);
-// console.log(JSON.stringify(myobj2)); // { "a": 0, "b": { "c": 0}}
+// console.log('obj2', JSON.stringify(obj2)); // { "a": 0, "b": { "c": 0}}
+// let myobj2 = assign({}, obj1);
+// console.log('myobj2',JSON.stringify(myobj2)); // { "a": 0, "b": { "c": 0}}
 // console.assert(compare(obj2, myobj2));
+
 
 // obj1.a = 1;
 // console.log(JSON.stringify(obj1)); // { "a": 1, "b": { "c": 0}}
@@ -48,39 +59,39 @@ function compare(obj1, obj2) {
 // console.log(JSON.stringify(obj2)); // { "a": 2, "b": { "c": 3}}
 
 
-//Merging objects
+// //Merging objects  --- DONE
 // const o1 = { a: 1 };
 // const o2 = { b: 2 };
 // const o3 = { c: 3 };
-// const myo1 = { a: 1 };
-//
 // const obj = Object.assign(o1, o2, o3);
-// const myobj = Object.assign(o1, o2, o3);
+// const myobj = assign(o1, o2, o3);
 // console.log('obj: ', obj); // { a: 1, b: 2, c: 3 }
 // console.log('myobj: ', myobj); // { a: 1, b: 2, c: 3 }
 // console.log('o1', o1);  // { a: 1, b: 2, c: 3 }, target object itself is changed.
 // console.assert(compare(obj, myobj));
 
-// Merging objects with same properties
+
+
+// Merging objects with same properties  -- DONE
 // const o1 = { a: 1, b: 1, c: 1 };
 // const o2 = { b: 2, c: 2 };
 // const o3 = { c: 3 };
 // const obj = Object.assign({}, o1, o2, o3);
-// const myobj = Object.assign({}, o1, o2, o3);
-// console.log(obj); // { a: 1, b: 2, c: 3 }
-// console.log(myobj);
+// const myobj = assign({}, o1, o2, o3);
+// console.log('obj',obj); // { a: 1, b: 2, c: 3 }
+// console.log('myobj',myobj);
 // console.assert(compare(obj, myobj));
 
-// Copying symbol-typed properties
+// // Copying symbol-typed properties      ----  NOT WORKING
 // const o1 = { a: 1 };
 // const o2 = { [Symbol('foo')]: 2 };
 //
 // const obj = Object.assign({}, o1, o2);
-// const myobj = Object.assign({}, o1, o2);
-// console.log(obj); // { a : 1, [Symbol("foo")]: 2 } (cf. bug 1207182 on Firefox)
-// console.log(Object.getOwnPropertySymbols(obj)); // [Symbol(foo)]
-// console.log(myobj); // { a : 1, [Symbol("foo")]: 2 } (cf. bug 1207182 on Firefox)
-// Object.getOwnPropertySymbols(myobj); // [Symbol(foo)]
+// const myobj = assign({}, o1, o2);
+// console.log('obj', obj); // { a : 1, [Symbol("foo")]: 2 } (cf. bug 1207182 on Firefox)
+// console.log('Object.getOwnPropertySymbols(obj)',Object.getOwnPropertySymbols(obj)); // [Symbol(foo)]
+// console.log('myobj', myobj); // { a : 1, [Symbol("foo")]: 2 } (cf. bug 1207182 on Firefox)
+// console.log('Object.getOwnPropertySymbols(myobj)', Object.getOwnPropertySymbols(myobj)); // [Symbol(foo)]
 // console.assert(compare(obj, myobj));
 
 // Properties on the prototype chain and non-enumerable properties cannot be copied
@@ -100,16 +111,15 @@ function compare(obj1, obj2) {
 // console.log(mycopy); // { baz: 3 }
 // console.assert(compare(copy, mycopy));
 
-// Primitives will be wrapped to objects
+// Primitives will be wrapped to objects   ---- DONE
 // const v1 = 'abc';
 // const v2 = true;
 // const v3 = 10;
 // const v4 = Symbol('foo');
-//
 // const obj = Object.assign({}, v1, null, v2, undefined, v3, v4);
-// const myobj = Object.assign({}, v1, null, v2, undefined, v3, v4);
-// // Primitives will be wrapped, null and undefined will be ignored.
-// // Note, only string wrappers can have own enumerable properties.
+// const myobj = assign({}, v1, null, v2, undefined, v3, v4);
+// // //Primitives will be wrapped, null and undefined will be ignored.
+// //// Note, only string wrappers can have own enumerable properties.
 // console.log(obj); // { "0": "a", "1": "b", "2": "c" }
 // console.log(myobj); // { "0": "a", "1": "b", "2": "c" }
 // console.assert(compare(obj, myobj));

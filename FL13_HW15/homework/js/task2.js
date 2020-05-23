@@ -7,6 +7,7 @@ const SPEED_DOWN_INTERVAL = 1500;
 const VEHICLE_MAX_SPEED = 70;
 const CAR_MAX_SPEED = 80;
 const MOTORCYCLE_MAX_SPEED = 90;
+const MOTORCYCLE_MAX_SPEED_DIFFERENCE = 30;
 
 function speedUp() {
   this.speed += DELTA_SPEED_UP;
@@ -113,7 +114,7 @@ Object.setPrototypeOf(Car.prototype, Vehicle.prototype);
 
 function speedUpForMotorcycle() {
   speedUp.call(this);
-  if (this.speed - this.maxSpeed > 30) {
+  if (this.speed - this.maxSpeed > MOTORCYCLE_MAX_SPEED_DIFFERENCE) {
     console.log('Engine overheating');
     this.break();
   }
@@ -128,7 +129,7 @@ function Motorcycle(model, color, engine) {
 
 Motorcycle.prototype.drive = function() {
   if (!this.driving) {
-    console.log("Let’s drive");
+    console.log('Let\'s drive');
   }
   Vehicle.prototype.drive.call(this);
 }
