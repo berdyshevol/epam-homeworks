@@ -1,0 +1,68 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+h1 {
+    margin: 0;
+    padding: 0;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+input {
+    margin: 0;
+}
+
+button {
+    display: inline-block;
+    margin: 0;
+}
+
+.app {
+    margin: 30px;
+}
+
+.app__form {
+    margin-top: 30px;
+}
+
+.app__list {
+    margin-top: 30px;
+}
+
+.row__item {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    width: 200px;
+}
+
+.row__label.id {
+    width: 100px;
+    text-align: left;
+}
+
+.row__input {
+    width: 100%;
+}
+
+.row__button {
+    width: 70px;
+    margin: 0;
+}
+
+/*TODO: как сделать чтобы кнопки примыкали*/
+.row__button button {
+    width: 100%;
+    margin: 0;
+}
+
+
