@@ -2,35 +2,81 @@ const baseUrl = 'http://localhost:3000';
 const appContainer = document.getElementById('app-container');
 
 const AppService = {
-  downloadAll() {
+  getAll(callback) {
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", baseUrl + '/users');
+    xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    xhr.send();
 
-    this._persons = this._persons || [
-      {"id":"5b9289","name":"Leanne Graham","username":"Bret","email":"Sincere@april.biz","address":{"street":"Kulas Light","suite":"Apt. 556","city":"Gwenborough","zipcode":"92998-3874","geo":{"lat":"-37.3159","lng":"81.1496"}},"phone":"1-770-736-8031 x56442","website":"hildegard.org","company":{"name":"Romaguera-Crona","catchPhrase":"Multi-layered client-server neural-net","bs":"harness real-time e-markets"}},
-      {"id":"b477dc","name":"Ervin Howell","username":"Antonette","email":"Shanna@melissa.tv","address":{"street":"Victor Plains","suite":"Suite 879","city":"Wisokyburgh","zipcode":"90566-7771","geo":{"lat":"-43.9509","lng":"-34.4618"}},"phone":"010-692-6593 x09125","website":"anastasia.net","company":{"name":"Deckow-Crist","catchPhrase":"Proactive didactic contingency","bs":"synergize scalable supply-chains"}}
-      ]
-    return this._persons;
+    xhr.onload = () => {
+      if (xhr.status != 200) { // HTTP ошибка?
+        callback( [] );
+        // console.log( 'Ошибка: ' + xhr.status);
+      } else {
+        // console.log( 'Good: ' + xhr.status);
+        callback( JSON.parse(xhr.responseText) );
+      }
+    };
   },
-  add(person) {
-    this._persons.push(person);
+
+  add(person, callback) {
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST",
+         baseUrl + '/users');
+    xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    xhr.send(JSON.stringify(this.getNameUsername(person)));
+
+    xhr.onload = () => {
+      if (xhr.status !== 201) {
+        // console.log( 'Ошибка add: ' + xhr.status);
+      } else {
+        // console.log( 'сделал add: ' + xhr.status);
+        callback();
+      }
+    };
   },
-  getIndexById(id) {
-    return this._persons.findIndex(man => man.id === id);
+
+  update(person, callback) {
+    let xhr = new XMLHttpRequest();
+    xhr.open("PUT",
+      baseUrl + '/users/' + person.id);
+    xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    xhr.send(JSON.stringify(this.getNameUsername(person)));
+
+    xhr.onload = () => {
+      if (xhr.status != 204) {
+        // console.log( 'Ошибка update: ' + xhr.status);
+      } else {
+        // console.log( 'сделал update: ' + xhr.status);
+        callback();
+      }
+    };
   },
-  update(person) {
-    const index = this.getIndexById(person.id);
-    if (index === -1) {
-      return;
-    }
-    this._persons[index] = person;
+
+  delete(person, callback) {
+    let xhr = new XMLHttpRequest();
+    xhr.open("DELETE",
+      baseUrl + '/users/' + person.id);
+    xhr.setRequestHeader('Authorization', 'admin');
+    xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    xhr.send();
+
+    xhr.onload = () => {
+      if (xhr.status != 204) {
+        // console.log( 'Ошибка update: ' + xhr.status);
+      } else {
+        // console.log( 'сделал update: ' + xhr.status);
+        callback();
+      }
+    };
   },
-  delete(person) {
-    const index = this.getIndexById(person.id);
-    if (index === -1) {
-      return;
-    }
-    this._persons.splice(index, 1);
+
+  getNameUsername(person) {
+    return {
+      name: person.name,
+      username: person.username
+    };
   }
-
 };
 
 const DOMService = {
@@ -44,7 +90,7 @@ const DOMService = {
       name: row.querySelector('[data-component="name"]').value,
       username: row.querySelector('[data-component="username"]').value,
     };
-  }
+  },
 };
 
 class Component {
@@ -111,6 +157,18 @@ class AppForm extends Component {
     this._element.querySelector('[data-component="username"]').value = '';
   }
 
+  _buttonsDisable() {
+    this._element
+      .querySelector('[data-component="form-button-add-new-user"]')
+      .disabled = true;
+  }
+
+  _buttonsEnable() {
+    this._element
+      .querySelector('[data-component="form-button-add-new-user"]')
+      .disabled = false;
+  }
+
   _render() {
     this._element.innerHTML = `
       <form data-component="form" class="form">
@@ -130,9 +188,10 @@ class AppForm extends Component {
 }
 
 class AppList extends Component {
-  constructor({ element }) {
+  constructor({ element, loader }) {
     super({ element });
     this._onAllEvents();
+    this._loadList(loader);
   }
 
   _onAllEvents() {
@@ -144,34 +203,82 @@ class AppList extends Component {
     );
   }
 
-  refresh() {
-    this._render();
+  _buttonsDisable(person) {
+    this._element
+      .querySelector(`[data-button-update="${ person.id }"]`)
+      .disabled = true;
+    this._element
+      .querySelector(`[data-button-delete="${ person.id }"]`)
+      .disabled = true;
+  }
+
+  _buttonsEnable(person) {
+    this._element
+      .querySelector(`[data-button-update="${ person.id }"]`)
+      .disabled = false;
+    this._element
+      .querySelector(`[data-button-delete="${ person.id }"]`)
+      .disabled = false;
+  }
+
+  _loadList(loader) {
+    loader.emit('loader-on');
+    this.refresh( () => {
+      loader.emit('loader-off');
+    });
+  }
+
+  refresh(callback) {
+    AppService.getAll( allPersons => {
+      this._render(allPersons);
+      callback();
+    });
+
+  }
+
+  _render(personList = []) {
+    this._element.innerHTML = `
+    <ul>
+      ${ personList.map( person =>
+      `<li class="row">
+           <label  class="row__item row__label id">
+             <div class="row__id" data-id="${ person.id }" data-component="id">${ person.id }</div>
+           </label>
+           <label  class="row__item row__label">
+             <input type="text" class="row__input" data-component="name" value="${ person.name }">
+           </label>
+           <label class="row__item row__label">
+             <input type="text" class="row__input" data-component="username" value="${ person.username }">
+           </label>
+           <div class="row__item row__button">
+             <button type="button" 
+                     data-component="list-row-button-update"
+                     data-button-update="${ person.id }"
+             >Update</button>
+           </div>
+           <div class="row__item row__button">
+             <button type="button" 
+                     data-component="list-row-button-delete"
+                     data-button-delete="${ person.id }"
+             >Delete</button>
+           </div>
+         </li>`
+    ).join(' ') }
+    </ul>
+  `;
+  }
+}
+
+class AppLoader extends Component {
+  constructor({ element }) {
+    super({ element });
+    this.hide();
   }
 
   _render() {
-    this._personList = AppService.downloadAll(); // TODO: отсюда надо будет убрать, чтобы какждый раз при рендоре не загружать !!!!!!!
     this._element.innerHTML = `
-      <ul>
-        ${ this._personList.map( person =>
-          `<li class="row">
-             <label  class="row__item row__label id">
-               <div class="row__id" data-id="${ person.id }" data-component="id">${ person.id }</div>
-             </label>
-             <label  class="row__item row__label">
-               <input type="text" class="row__input" data-component="name" value="${ person.name }">
-             </label>
-             <label class="row__item row__label">
-               <input type="text" class="row__input" data-component="username" value="${ person.username }">
-             </label>
-             <div class="row__item row__button">
-               <button type="button" data-component="list-row-button-update">Update</button>
-             </div>
-             <div class="row__item row__button">
-               <button type="button" data-component="list-row-button-delete">Delete</button>
-             </div>
-           </li>`
-        ).join(' ') }
-      </ul>
+      <h2>Loading ...</h2>
+      <div class="loader"></div>
     `;
   }
 }
@@ -180,8 +287,23 @@ class UserAppPage {
   constructor({ element}) {
     this._element = element;
     this._render();
+    this._initLoader();
     this._initAppForm();
     this._initAppList();
+  }
+
+  _initLoader() {
+    this._appLoader = new AppLoader({
+      element: this._element.querySelector('[data-component="app-loader"]')
+    });
+
+    this._appLoader.subscribe('loader-on', () => {
+      this._appLoader.show()
+    });
+
+    this._appLoader.subscribe('loader-off', () => {
+      this._appLoader.hide()
+    });
   }
 
   _initAppForm() {
@@ -189,26 +311,45 @@ class UserAppPage {
       element: this._element.querySelector('[data-component="app-form"]')
     });
     this._appForm.subscribe('click-button-add-new-user', person => {
-      AppService.add(person);
-      this._appList.refresh();
-      this._appForm.clear();
-      console.log('form-button-add-new-user is pressed', AppService.downloadAll())
+      this._appForm._buttonsDisable();
+      this._appLoader.show();
+      AppService.add(person, () => {
+        this._appList.refresh( () => {
+          this._appForm.clear();
+          this._appForm._buttonsEnable();
+          this._appLoader.hide();
+        });
+      });
     });
   }
 
   _initAppList() {
     this._appList = new AppList({
-      element: this._element.querySelector('[data-component="app-list"]')
+      element: this._element.querySelector('[data-component="app-list"]'),
+      loader: this._appLoader
     });
+
     this._appList.subscribe('click-button-delete', person => {
-      AppService.delete(person);
-      this._appList.refresh();
-      console.log('list-row-button-delete', AppService.downloadAll());
+      this._appList._buttonsDisable(person);
+      this._appLoader.show();
+
+      AppService.delete(person, () => {
+        this._appList.refresh(() => {
+          this._appLoader.hide();
+        });
+      });
     });
+
     this._appList.subscribe('click-button-update', person => {
-      AppService.update(person);
-      this._appList.refresh();
-      console.log('list-row-button-update', AppService.downloadAll())
+      this._appList._buttonsDisable(person);
+      this._appLoader.show();
+
+      AppService.update(person, () => {
+        this._appList.refresh( () => {
+          this._appList._buttonsEnable(person);
+          this._appLoader.hide();
+        });
+      });
     });
   }
 
@@ -218,6 +359,7 @@ class UserAppPage {
         <h1>Manager User App</h1>
         <div data-component="app-form" class="app__form"></div>
         <div data-component="app-list" class="app__list"></div>
+        <div data-component="app-loader" class="app__loader"></div>
       </div>
     `;
   }

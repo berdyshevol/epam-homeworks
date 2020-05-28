@@ -65,9 +65,6 @@ Vehicle.prototype.showFinalMessage = function() {
   console.log(`Vehicle is stopped. Maximum speed during the drive was ${ this.recordSpeed }`);
 }
 
-Vehicle.prototype.run = function() {
-  this.driving = setInterval(speedUp.bind(this), SPEED_UP_INTERVAL);
-}
 
 Vehicle.prototype.drive = function() {
   if (this.driving) {
@@ -81,9 +78,13 @@ Vehicle.prototype.drive = function() {
   this.driving = setInterval(this.speedUpBindThis, SPEED_UP_INTERVAL);
 }
 
-Vehicle.prototype.break = function() {
+Vehicle.prototype.stop = function() {
+  if (this.speed === 0) {
+    return;
+  }
   if (this.breaking) {
     console.log('Already slows down');
+    return;
   }
   if (this.driving) {
     clearInterval(this.driving);
@@ -105,6 +106,7 @@ Car.prototype.changeColor = function(newColor) {
     this.color = newColor;
   }
 }
+
 Car.prototype.showFinalMessage = function() {
   console.log(`Car ${ this.model } is stopped. Maximum speed during the drive ${ this.recordSpeed }`);
 }
@@ -116,7 +118,7 @@ function speedUpForMotorcycle() {
   speedUp.call(this);
   if (this.speed - this.maxSpeed > MOTORCYCLE_MAX_SPEED_DIFFERENCE) {
     console.log('Engine overheating');
-    this.break();
+    this.stop();
   }
 }
 
@@ -147,11 +149,11 @@ Object.setPrototypeOf(Motorcycle.prototype, Vehicle.prototype);
 
 // test
 
-// const vehicle = new Vehicle('green', 'V8');
-// vehicle.upgradeEngine('V8', 100);
-// vehicle.getInfo();
-// console.log('we want to run');
-// vehicle.drive();
+const vehicle = new Vehicle('green', 'V8');
+vehicle.upgradeEngine('V8', 100);
+console.log(vehicle.getInfo()); // DONE
+vehicle.drive();
+// vehicle.stop();
 
 // setTimeout(() => {
 //   console.log('we want to stop');
@@ -164,10 +166,10 @@ Object.setPrototypeOf(Motorcycle.prototype, Vehicle.prototype);
 // const car = new Car('Ford Mustang', 'black', 'V8');
 // car.changeColor('black');
 // car.changeColor('orange');
-// car.drive();
+// console.log(car.getInfo())
 // car.upgradeEngine('V8', 140);
-// car.getInfo();
+// console.log(car.getInfo())
 
-const motorcycle = new Motorcycle('suzuki', 'white', 'V8');
-motorcycle.drive();
+// const motorcycle = new Motorcycle('suzuki', 'white', 'V8');
+// motorcycle.drive();
 

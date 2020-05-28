@@ -27,36 +27,22 @@ function compare(obj1, obj2) {
   return JSON.stringify(obj1) === JSON.stringify(obj2)
 }
 
+// TASK -- DONE
+// const paymentCard = {cash: '100$'};
+// const creditCard = {limit: '50$', cash: '200$'};
+// const result = Object.assign({}, paymentCard, creditCard)
+// const myresult = assign({}, paymentCard, creditCard)
+// console.log(result)
+// console.log(myresult)
+// compare(result, myresult)
+
+// // Cloning an object - DONE
 // const obj = { a: 1 };
 // const copy = Object.assign({}, obj);
-// console.log('Object.assign', copy); // { a: 1 }
-// const mycopy = assign({}, obj);
-// console.log('Object.assign', mycopy); // { a: 1 }
+// const mycopy = Object.assign({}, obj);
+// console.log(copy); // { a: 1 }
+// console.log(mycopy); // { a: 1 }
 // console.assert(compare(copy, mycopy));
-
-// let obj1 = { a: 0 , b: { c: 0}};
-// let obj2 = Object.assign({}, obj1);
-// console.log('obj2', JSON.stringify(obj2)); // { "a": 0, "b": { "c": 0}}
-// let myobj2 = assign({}, obj1);
-// console.log('myobj2',JSON.stringify(myobj2)); // { "a": 0, "b": { "c": 0}}
-// console.assert(compare(obj2, myobj2));
-
-
-// obj1.a = 1;
-// console.log(JSON.stringify(obj1)); // { "a": 1, "b": { "c": 0}}
-// console.log(JSON.stringify(obj2)); // { "a": 0, "b": { "c": 0}}
-// console.log(JSON.stringify(myobj2));
-// console.assert(compare(obj2, myobj2));
-
-// obj2.a = 2;
-// myobj2.a = 2;
-// console.log(JSON.stringify(obj1)); // { "a": 1, "b": { "c": 0}}
-// console.log(JSON.stringify(obj2)); // { "a": 2, "b": { "c": 0}}
-// console.log(JSON.stringify(myobj2)); // { "a": 2, "b": { "c": 0}}
-// console.assert(compare(obj2, myobj2));
-// obj2.b.c = 3;
-// console.log(JSON.stringify(obj1)); // { "a": 1, "b": { "c": 3}}
-// console.log(JSON.stringify(obj2)); // { "a": 2, "b": { "c": 3}}
 
 
 // //Merging objects  --- DONE
