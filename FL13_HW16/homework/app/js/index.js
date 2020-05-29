@@ -179,7 +179,7 @@ class AppForm extends Component {
         <label>
           <input type="text" placeholder="Full Name" data-component="username">
         </label>
-        <button type="button" data-component="form-button-add-new-user">
+        <button type="button" data-component="form-button-add-new-user" class="form__button">
           Add New User
         </button>
       </form>
@@ -241,22 +241,22 @@ class AppList extends Component {
     <ul>
       ${ personList.map( person =>
       `<li class="row">
-           <label  class="row__item row__label id">
+           <label  class="row__item row__item--id">
              <div class="row__id" data-id="${ person.id }" data-component="id">${ person.id }</div>
            </label>
-           <label  class="row__item row__label">
+           <label  class="row__item">
              <input type="text" class="row__input" data-component="name" value="${ person.name }">
            </label>
-           <label class="row__item row__label">
+           <label class="row__item">
              <input type="text" class="row__input" data-component="username" value="${ person.username }">
            </label>
-           <div class="row__item row__button">
+           <div class="row__item row__item--button">
              <button type="button" 
                      data-component="list-row-button-update"
                      data-button-update="${ person.id }"
              >Update</button>
            </div>
-           <div class="row__item row__button">
+           <div class="row__item row__item--button">
              <button type="button" 
                      data-component="list-row-button-delete"
                      data-button-delete="${ person.id }"

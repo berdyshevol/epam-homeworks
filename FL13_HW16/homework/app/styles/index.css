@@ -6,6 +6,12 @@ body {
     width: 100%;
 }
 
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
 h1 {
     margin: 0;
     padding: 0;
@@ -22,7 +28,7 @@ input {
 }
 
 button {
-    display: inline-block;
+    width: 100%;
     margin: 0;
 }
 
@@ -34,18 +40,28 @@ button {
     margin-top: 30px;
 }
 
+.form__button {
+    width: auto;
+}
+
 .app__list {
     margin-top: 30px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
 }
 
 .row__item {
     margin: 0;
     padding: 0;
-    display: inline-block;
+    /*display: inline;*/
     width: 200px;
 }
 
-.row__label.id {
+.row__item--id {
     width: 100px;
     text-align: left;
 }
@@ -54,10 +70,11 @@ button {
     width: 100%;
 }
 
-.row__button {
+.row__item--button {
     width: 70px;
     margin: 0;
 }
+
 
 /*TODO: как сделать чтобы кнопки примыкали*/
 .row__button button {
